@@ -1,2 +1,2 @@
-# aws-solutions-architect-associate-notes
-aws-solutions-architect-associate-notes
+# Aws Solutions Architect Associate Notes
+AWS-solutions-architect-associate-notes
