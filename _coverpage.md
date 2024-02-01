@@ -7,4 +7,4 @@
 > List of topics (TODO)
 
 [GitHub](https://github.com/asif-simform/aws-solutions-architect-associate-notes)
-[Get Started](#reactjs-questions-amp-answers)
+[Get Started](#aws-solutions-architect-associate-notes)
