@@ -8,12 +8,46 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
 ### Table of Contents
 
-| No. | Questions                       |
-| --- | ------------------------------- |
-|     | **IAM**                         |
-| 1   | [What is IAM?](#what-is-IAM)    |
-| 2   | [IAM features](#IAM-features)   |
-| 3   | [Accessing IAM](#Accessing-IAM) |
+| No. | Questions                                         |
+| --- | ------------------------------------------------- |
+|     | **AWS**                                           |
+| 1   | [What is AWS?](#what-is-AWS)                      |
+| 2   | [AWS Cloud Use Cases](#AWS-Cloud-Use-Cases)       |
+| 3   | [Global Services](#Global-Services)               |
+| 4   | [Region-scoped Services](#Region-scoped-Services) |
+|     | **IAM**                                           |
+| 1   | [What is IAM?](#what-is-IAM)                      |
+| 2   | [IAM features](#IAM-features)                     |
+| 3   | [Accessing IAM](#Accessing-IAM)                   |
+
+## AWS
+
+1. ### What is AWS?
+
+   AWS (Amazon Web Services) is a comprehensive, evolving cloud computing platform provided by Amazon. It includes a mixture of **infrastructure-as-a-service (IaaS)**, **platform-as-a-service (PaaS)** and packaged **software-as-a-service (SaaS)** offerings. AWS offers tools such as compute power, database storage and content delivery services.
+
+2. ### AWS Cloud Use Cases
+
+   - AWS helps you create powerful and flexible apps that can grow as needed.
+   - Suitable for many different types of businesses.
+   - Here are some simplified use cases:
+     - **Enterprise IT, Backup & Storage, Big Data Analytics:** This involves managing and storing data for large companies, analyzing that data for insights, and ensuring it's safely backed up.
+     - **Website Hosting, Mobile & Social Apps:** Providing the infrastructure and support for hosting websites, mobile applications, and social media apps.
+     - **Gaming:** Developing and/or hosting video games for various platforms.
+
+3. ### Global Services
+
+   - Identity and Access Management (IAM)
+   - Route 53 (DNS service)
+   - CloudFront (Content Delivery Network)
+   - WAF (Web Application Firewall)
+
+4. ### Region-scoped Services
+
+   - Amazon EC2 (Infrastructure as a Service)
+   - Elastic Beanstalk (Platform as a Service)
+   - Lambda (Function as a Service)
+   - Rekognition (Software as a Service)
 
 ## IAM
 
