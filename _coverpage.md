@@ -7,7 +7,10 @@
 > List of topics
 
 - AWS
-- AWS IAM (AWS Identity and Access Management)
+- AWS Identity & Access Management (AWS IAM)
+- Amazon EC2 – Basics
+- Amazon EC2 – Associate
+- Amazon EC2 – Instance Storage
 
 [GitHub](https://github.com/asif-simform/aws-solutions-architect-associate-notes)
 [Get Started](#aws-solutions-architect-associate-notes)

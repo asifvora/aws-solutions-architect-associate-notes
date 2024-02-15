@@ -24,7 +24,9 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 6   | [Roles for Services](#Roles-for-Services)                   |
 | 7   | [Permissions](#Permissions)                                 |
 | 8   | [Security Tools](#Security-Tools)                           |
-| 9   | [Guidelines & Best Practices](#Guidelines-& Best-Practices) |
+| 9   | [Guidelines & Best Practices](#Guidelines-&-Best-Practices) |
+|     | **Amazon EC2 – Basics**                                     |
+| 1   | [What is Amazon EC2?](#what-is-Amazon-EC2)                  |
 
 ## AWS
 
@@ -167,12 +169,28 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
 9. ### Guidelines & Best Practices
 
-- Don’t use the root account except for AWS account setup
-- One physical user = One AWS user
-- **Assign users to groups** and assign permissions to groups
-- Create a **strong password** policy
-- Use and enforce the use of **Multi Factor Authentication (MFA)**
-- Create and use **Roles** for giving permissions to AWS services
-- Use Access Keys for Programmatic Access (CLI / SDK)
-- Audit permissions of your account using IAM Credentials Report & IAM Access Advisor
-- **Never share IAM users & Access Keys**
+   - Don’t use the root account except for AWS account setup
+   - One physical user = One AWS user
+   - **Assign users to groups** and assign permissions to groups
+   - Create a **strong password** policy
+   - Use and enforce the use of **Multi Factor Authentication (MFA)**
+   - Create and use **Roles** for giving permissions to AWS services
+   - Use Access Keys for Programmatic Access (CLI / SDK)
+   - Audit permissions of your account using IAM Credentials Report & IAM Access Advisor
+   - **Never share IAM users & Access Keys**
+
+## Amazon EC2 – Basics
+
+1. ### What is Amazon EC2?
+
+   - EC2 is one of the most popular of AWS’ offering
+   - EC2 = Elastic Compute Cloud = Infrastructure as a Service
+   - It mainly consists in the capability of :
+     - Renting virtual machines (EC2)
+     - Storing data on virtual drives (EBS)
+     - Distributing load across machines (ELB)
+     - Scaling the services using an auto-scaling group (ASG)
+
+## Amazon EC2 – Associate
+
+## Amazon EC2 – Instance Storage
