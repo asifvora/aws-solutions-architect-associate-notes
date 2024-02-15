@@ -7,7 +7,7 @@
 > List of topics
 
 - AWS
-- IAM
+- AWS IAM (AWS Identity and Access Management)
 
 [GitHub](https://github.com/asif-simform/aws-solutions-architect-associate-notes)
 [Get Started](#aws-solutions-architect-associate-notes)

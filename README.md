@@ -10,7 +10,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
 | No. | Questions                                         |
 | --- | ------------------------------------------------- |
-|     | **AWS**                                           |
+|     | **AWS IAM (AWS Identity and Access Management)**  |
 | 1   | [What is AWS?](#what-is-AWS)                      |
 | 2   | [AWS Cloud Use Cases](#AWS-Cloud-Use-Cases)       |
 | 3   | [Global Services](#Global-Services)               |
@@ -20,7 +20,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 2   | [IAM features](#IAM-features)                     |
 | 3   | [Accessing IAM](#Accessing-IAM)                   |
 
-## AWS
+## AWS IAM (AWS Identity and Access Management)
 
 1. ### What is AWS?
 
@@ -48,8 +48,9 @@ https://aws-solutions-architect-associate-notes.vercel.app
    - Elastic Beanstalk (Platform as a Service)
    - Lambda (Function as a Service)
    - Rekognition (Software as a Service)
+   - [List of AWS Services Available by Region](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/)
 
-## IAM
+## IAM (AWS Identity and Access Management)
 
 1. ### What is IAM?
 
