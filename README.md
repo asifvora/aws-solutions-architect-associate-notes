@@ -8,19 +8,25 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
 ### Table of Contents
 
-| No. | Questions                                         |
-| --- | ------------------------------------------------- |
-|     | **AWS IAM (AWS Identity and Access Management)**  |
-| 1   | [What is AWS?](#what-is-AWS)                      |
-| 2   | [AWS Cloud Use Cases](#AWS-Cloud-Use-Cases)       |
-| 3   | [Global Services](#Global-Services)               |
-| 4   | [Region-scoped Services](#Region-scoped-Services) |
-|     | **IAM**                                           |
-| 1   | [What is IAM?](#what-is-IAM)                      |
-| 2   | [IAM features](#IAM-features)                     |
-| 3   | [Accessing IAM](#Accessing-IAM)                   |
+| No. | Questions                                                   |
+| --- | ----------------------------------------------------------- |
+|     | **AWS**                                                     |
+| 1   | [What is AWS?](#what-is-AWS)                                |
+| 2   | [AWS Cloud Use Cases](#AWS-Cloud-Use-Cases)                 |
+| 3   | [Global Services](#Global-Services)                         |
+| 4   | [Region-scoped Services](#Region-scoped-Services)           |
+|     | **AWS IAM (AWS Identity and Access Management)**            |
+| 1   | [What is IAM?](#what-is-IAM)                                |
+| 2   | [IAM features](#IAM-features)                               |
+| 3   | [Accessing IAM](#Accessing-IAM)                             |
+| 4   | [Users & Groups](#Users-&-Groups)                           |
+| 5   | [Permissions](#Permissions)                                 |
+| 6   | [Roles for Services](#Roles-for-Services)                   |
+| 7   | [Permissions](#Permissions)                                 |
+| 8   | [Security Tools](#Security-Tools)                           |
+| 9   | [Guidelines & Best Practices](#Guidelines-& Best-Practices) |
 
-## AWS IAM (AWS Identity and Access Management)
+## AWS
 
 1. ### What is AWS?
 
@@ -71,7 +77,102 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
 3. ### Accessing IAM
 
-   - AWS Management Console
-   - AWS Command Line Tools
-   - AWS SDKs
+   - AWS Management Console (protected by password + MFA)
+   - AWS Command Line Interface (CLI): protected by access keys
+   - AWS Software Developer Kit (SDK) - for code: protected by access keys
    - IAM Query API
+
+4. ### Users & Groups
+
+   - Root account is automatically made, but don't use or share it.
+   - Users are people within your organization, and can be grouped
+   - Groups only contain users, not other groups
+   - Users don’t have to belong to a group, and user can belong to multiple groups
+
+   ![groupd](./assests/images/iam-groupd.png)
+
+5. ### Permissions
+
+   - **Users or Groups** can be assigned JSON documents called policies
+   - These policies define the **permissions** of the users
+   - In AWS you apply the **least privilege principle:** don’t give more permissions than a user needs
+
+6. ### Policies Structure
+
+   - Consists of
+
+     - Version: policy language version,alwaysinclude “2012-10- 17”
+     - Id: an identifier for the policy (optional)
+     - Statement: one or more individual statements (required)
+
+   - Statements consists of
+     - Sid: an identifier for the statement (optional)
+     - Effect: whether the statement allows or denies access (Allow, Deny)
+     - Principal: account/user/role to which this policy applied to
+     - Action: list of actions this policy allows or denies
+     - Resource: list of resources to which the actions applied to
+     - Condition: conditions for when this policy is in effect (optional)
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "FirstStatement",
+      "Effect": "Allow",
+      "Action": ["iam:ChangePassword"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "SecondStatement",
+      "Effect": "Allow",
+      "Action": "s3:ListAllMyBuckets",
+      "Resource": "*"
+    },
+    {
+      "Sid": "ThirdStatement",
+      "Effect": "Allow",
+      "Action": [
+        "s3:List*",
+        "s3:Get*"
+      ],
+      "Resource": [
+        "arn:aws:s3:::confidential-data",
+        "arn:aws:s3:::confidential-data/*"
+      ],
+      "Condition": {"Bool": {"aws:MultiFactorAuthPresent": "true"}}
+    }
+  ]
+}
+
+```
+
+7. ### Roles for Services
+
+   - Some AWS service will need to perform actions on your behalf
+   - To do so, we will assign permissions to AWS services with IAM Roles
+   - Common roles:
+     - EC2 Instance Roles
+     - Lambda Function Roles
+     - Roles for CloudFormation
+
+8. ### Security Tools
+
+   - IAM Credentials Report (account-level)
+   - a report that lists all your account's users and the status of their various credentials
+
+   - IAM Access Advisor (user-level)
+     - Access advisor shows the service permissions granted to a user and when those services were last accessed.
+     - You can use this information to revise your policies.
+
+9. ### Guidelines & Best Practices
+
+- Don’t use the root account except for AWS account setup
+- One physical user = One AWS user
+- **Assign users to groups** and assign permissions to groups
+- Create a **strong password** policy
+- Use and enforce the use of **Multi Factor Authentication (MFA)**
+- Create and use **Roles** for giving permissions to AWS services
+- Use Access Keys for Programmatic Access (CLI / SDK)
+- Audit permissions of your account using IAM Credentials Report & IAM Access Advisor
+- **Never share IAM users & Access Keys**
