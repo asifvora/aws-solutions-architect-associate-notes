@@ -34,6 +34,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 6   | [Classic Ports](#Classic-Ports)                                           |
 | 7   | [SSH Summary Table](#SSH-Summary-Table)                                   |
 | 8   | [EC2 Instances Purchasing Options](#EC2-Instances-Purchasing-Options)     |
+|     | **Amazon EC2 – Associate**                                                |
 
 ## AWS
 
@@ -426,12 +427,31 @@ https://aws-solutions-architect-associate-notes.vercel.app
    - ![dedicated-instance-vs-host](./assests/images/dedicated-instance-vs-host.png)
 
    - **Capacity Reservations** – reserve capacity in a specific AZ for any duration
+
      - Reserve On-Demand instances capacity in a specific AZ for any duration
      - You always have access to EC2 capacity when you need it
      - No time commitment (create/cancel anytime), no billing discounts
      - Combine with Regional Reserved Instances and Savings Plans to benefit from billing discounts
      - You’re charged at On-Demand rate whether you run instances or not
      - Suitable for short-term, uninterrupted workloads that needs to be in a specific AZ
+
+   - **EC2 Spot Instance Requests**
+
+     - Can get a discount of up to 90% compared to On-demand
+     - Define **max spot price** and get the instance while **current spot price** < **max**
+       - If the current spot price > your max price you can choose to stop or terminate your instance with a 2 minutes grace period.
+     - Used for batch jobs, data analysis, or workloads that are resilient to failures.
+     - Not great for critical jobs or databases
+
+   - **Spot Fleets**
+     - Spot Fleets = set of Spot Instances + (optional) On-Demand Instances
+     - The Spot Fleet will try to meet the target capacity with price constraints
+     - Strategies to allocate Spot Instances:
+       - lowestPrice: from the pool with the lowest price (cost optimization, short workload)
+       - diversified: distributed across all pools (great for availability, long workloads)
+       - capacityOptimized: pool with the optimal capacity for the number of instances
+       - priceCapacityOptimized (recommended): pools with highest capacity available, then select the pool with the lowest price (best choice for most workloads)
+     - Spot Fleets allow us to automatically request Spot Instances with the lowest price
 
 ## Amazon EC2 – Associate
 
