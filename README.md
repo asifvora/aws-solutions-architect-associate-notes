@@ -8,25 +8,27 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
 ### Table of Contents
 
-| No. | Questions                                                   |
-| --- | ----------------------------------------------------------- |
-|     | **AWS**                                                     |
-| 1   | [What is AWS?](#what-is-AWS)                                |
-| 2   | [AWS Cloud Use Cases](#AWS-Cloud-Use-Cases)                 |
-| 3   | [Global Services](#Global-Services)                         |
-| 4   | [Region-scoped Services](#Region-scoped-Services)           |
-|     | **AWS IAM (AWS Identity and Access Management)**            |
-| 1   | [What is IAM?](#what-is-IAM)                                |
-| 2   | [IAM features](#IAM-features)                               |
-| 3   | [Accessing IAM](#Accessing-IAM)                             |
-| 4   | [Users & Groups](#Users-&-Groups)                           |
-| 5   | [Permissions](#Permissions)                                 |
-| 6   | [Roles for Services](#Roles-for-Services)                   |
-| 7   | [Permissions](#Permissions)                                 |
-| 8   | [Security Tools](#Security-Tools)                           |
-| 9   | [Guidelines & Best Practices](#Guidelines-&-Best-Practices) |
-|     | **Amazon EC2 – Basics**                                     |
-| 1   | [What is Amazon EC2?](#what-is-Amazon-EC2)                  |
+| No. | Questions                                                                 |
+| --- | ------------------------------------------------------------------------- |
+|     | **AWS**                                                                   |
+| 1   | [What is AWS?](#what-is-AWS)                                              |
+| 2   | [AWS Cloud Use Cases](#AWS-Cloud-Use-Cases)                               |
+| 3   | [Global Services](#Global-Services)                                       |
+| 4   | [Region-scoped Services](#Region-scoped-Services)                         |
+|     | **AWS IAM (AWS Identity and Access Management)**                          |
+| 1   | [What is IAM?](#what-is-IAM)                                              |
+| 2   | [IAM features](#IAM-features)                                             |
+| 3   | [Accessing IAM](#Accessing-IAM)                                           |
+| 4   | [Users & Groups](#Users-&-Groups)                                         |
+| 5   | [Permissions](#Permissions)                                               |
+| 6   | [Roles for Services](#Roles-for-Services)                                 |
+| 7   | [Permissions](#Permissions)                                               |
+| 8   | [Security Tools](#Security-Tools)                                         |
+| 9   | [Guidelines & Best Practices](#Guidelines-&-Best-Practices)               |
+|     | **Amazon EC2 – Basics**                                                   |
+| 1   | [What is Amazon EC2?](#what-is-Amazon-EC2)                                |
+| 1   | [EC2 sizing & configuration options](#EC2-sizing-&-configuration-options) |
+| 1   | [EC2 InstanceTypes - Overview](#EC2-InstanceTypes---Overview)             |
 
 ## AWS
 
@@ -186,10 +188,112 @@ https://aws-solutions-architect-associate-notes.vercel.app
    - EC2 is one of the most popular of AWS’ offering
    - EC2 = Elastic Compute Cloud = Infrastructure as a Service
    - It mainly consists in the capability of :
-     - Renting virtual machines (EC2)
-     - Storing data on virtual drives (EBS)
-     - Distributing load across machines (ELB)
-     - Scaling the services using an auto-scaling group (ASG)
+     - Renting virtual machines (EC2 - Elastic Compute Cloud)
+     - Storing data on virtual drives (EBS - Elastic Block Store)
+     - Distributing load across machines (ELB - Elastic Load Balancing)
+     - Scaling the services using an auto-scaling group (ASG - Auto Scaling Group )
+
+2. ### EC2 sizing & configuration options
+
+   - Operating System: Linux, Windows or Mac OS
+   - How much **CPU** and **RAM**
+   - Storage space
+     - Network-attached (**EBS** - Elastic Block Store & **EFS** - Elastic File System)
+     - Hrdware (EC2 Instance Store)
+   - Network card: Speed of the card, Public IP address
+   - Firewall rules: Security group
+   - Bootstrap script (configure at first launch): EC2 User Data
+     - Used to automate boot tasks
+       - Example:
+         - Installing updates
+         - Installing software
+         - Downloading common files from the internet
+         - Anything you can think of
+     - Runs with the root user
+
+3. ### EC2 InstanceTypes - Overview
+
+   - Different types of EC2 instances that are optimised for different use cases [Check here](https://aws.amazon.com/ec2/instance-types/)
+
+     - General Purpose
+
+       - Use cases:
+         - General purpose instances offer balanced compute, memory, and networking resources.
+         - Suitable for diverse workloads requiring a mix of these resources.
+         - Ideal for applications like web servers and code repositories.
+         - Provide versatility for various tasks without specializing in one resource type.
+
+     - Compute Optimized
+
+       - Use cases:
+         - Compute Optimized instances are designed for applications that require high-performance processors.
+         - Ideal for compute-bound tasks that demand significant processing power.
+         - Suited for batch processing, media transcoding, high-performance web servers, and scientific modeling.
+         - Also beneficial for high-performance computing (HPC), dedicated gaming servers, and ad server engines.
+         - Suitable for machine learning inference and other compute-intensive applications.
+
+     - Memory Optimized
+
+       - Use cases:
+         - Designed for fast performance
+         - Ideal for workloads handling large data sets in memory
+
+     - Accelerated Computing
+
+       - Use cases:
+         - Accelerated computing instances use hardware accelerators or co-processors.
+         - They perform functions like floating-point number calculations, graphics processing, or data pattern matching.
+         - These functions are done more efficiently compared to software running on CPUs.
+
+     - Storage Optimized
+
+       - Use cases:
+         - Designed for workloads needing high sequential read/write access to large data sets
+         - Optimized for delivering tens of thousands of low-latency, random IOPS
+         - Ideal for applications with heavy data processing needs
+         - Local storage ensures faster access compared to network storage
+         - Suitable for data-intensive tasks like database management, analytics, and data warehousing
+
+     - HPC Optimized (High performance computing)
+
+       - Use cases:
+         - HPC instances on AWS are designed for running high-performance computing workloads efficiently.
+         - They offer optimized price-performance for scaling HPC tasks.
+         - Ideal for applications requiring robust processing power, like complex simulations and deep learning tasks.
+         - Suited for large-scale operations where performance is critical.
+         - Tailored with high-performance processors to enhance computational capabilities.
+
+     - Instance Features
+
+       - Use cases:
+
+         - **Scalability**: Easily scale your applications up or down based on demand.
+         - **Management Tools**: Access a variety of tools to streamline deployment and management processes.
+         - **Monitoring**: Monitor the performance of your applications in real-time.
+         - **Flexibility**: Choose from a wide range of instance types to suit your specific needs.
+         - **Security**: Benefit from built-in security features to protect your applications and data.
+         - **Integration**: Seamlessly integrate with other AWS services for enhanced functionality.
+         - **Cost-Effectiveness**: Pay only for the resources you use, with cost-effective pricing models.
+         - **Reliability**: Rely on Amazon's robust infrastructure for high availability and reliability.
+
+         - Burstable Performance Instances
+         - Multiple Storage Options
+         - EBS-optimized Instances
+         - Cluster Networking
+         - Intel Processor Features
+
+     - Measuring Instance Performance
+
+       - Use cases:
+
+         - Amazon EC2 offers various instance types with different specifications:
+           - CPU
+           - Memory
+           - Disk
+           - Networking
+         - Launching new instances and running tests simultaneously is straightforward.
+         - It's advised to measure application performance to select suitable instance types and confirm application architecture.
+         - Rigorous load and scale testing is recommended to ensure desired application scalability.
 
 ## Amazon EC2 – Associate
 
