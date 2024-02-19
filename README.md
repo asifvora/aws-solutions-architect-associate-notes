@@ -30,6 +30,9 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 2   | [EC2 sizing & configuration options](#EC2-sizing-&-configuration-options) |
 | 3   | [EC2 InstanceTypes - Overview](#EC2-InstanceTypes---Overview)             |
 | 4   | [EC2 InstanceTypes - Example](#EC2-InstanceTypes---Example)               |
+| 5   | [Introduction to Security Groups](#Introduction-to-Security-Groups)       |
+| 6   | [Classic Ports](#Classic-Ports)                                           |
+| 7   | [SSH Summary Table](#Summary-Table)                                       |
 
 ## AWS
 
@@ -307,6 +310,43 @@ https://aws-solutions-architect-associate-notes.vercel.app
    - **_t2.micro is part of the AWS free tier (up to 750 hours per month)_**
    - For more details [check here](https://instances.vantage.sh/)
 
+5. ### Introduction to Security Groups
+
+   - Fundamental of network security in AWS
+   - They control how traffic is allowed into or out of our EC2 Instances.
+     - Inbound traffic
+     - Outbound traffic
+   - Only contain **allow** rules
+   - Rules can reference by IP or by security group
+   - Acting as a “firewall” on EC2 instances
+     - Access to Ports
+     - Authorised IP ranges – IPv4 and IPv6
+     - Control of inbound network (from other to the instance)
+     - Control of outbound network (from the instance to other)
+   - Can be attached to multiple instances
+   - It’s good to maintain one separate security group for SSH access
+   - All inbound traffic is **blocked** by default
+   - All outbound traffic is **authorised** by default
+
+6. ### Classic Ports
+
+   - 22 = SSH (Secure Shell) - log into a Linux instance
+   - 21 = FTP (File Transfer Protocol) – upload files into a file share
+   - 22 = SFTP (Secure File Transfer Protocol) – upload files using SSH
+   - 80 = HTTP – access unsecured websites
+   - 443 = HTTPS – access secured websites
+   - 3389 = RDP (Remote Desktop Protocol) – log into a Windows instance
+
+7. ### SSH Summary Table
+   |              | SSH | Putty | EC2 Instance Connect |
+   | ------------ | --- | ----- | -------------------- |
+   | Mac          | ☑   |       | ☑                    |
+   | Linux        | ☑   |       | ☑                    |
+   | Window < 10  |     | ☑     | ☑                    |
+   | Window >= 10 | ☑   | ☑     | ☑                    |
+
 ## Amazon EC2 – Associate
 
 ## Amazon EC2 – Instance Storage
+
+☑
