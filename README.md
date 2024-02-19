@@ -29,6 +29,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 1   | [What is Amazon EC2?](#what-is-Amazon-EC2)                                |
 | 2   | [EC2 sizing & configuration options](#EC2-sizing-&-configuration-options) |
 | 3   | [EC2 InstanceTypes - Overview](#EC2-InstanceTypes---Overview)             |
+| 4   | [EC2 InstanceTypes - Example](#EC2-InstanceTypes---Example)               |
 
 ## AWS
 
@@ -215,37 +216,42 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
    - Different types of EC2 instances that are optimised for different use cases [Check here](https://aws.amazon.com/ec2/instance-types/)
 
-     - **General Purpose**
+     - **General Purpose** : M6a, M6g, M6gd, M6i, M6id, M6idn, M6in, M7a, M7g, M7gd, M7i, M7i-flex, T4g
 
        - Use cases:
-         - General purpose instances offer balanced compute, memory, and networking resources.
-         - Suitable for diverse workloads requiring a mix of these resources.
-         - Ideal for applications like web servers and code repositories.
-         - Provide versatility for various tasks without specializing in one resource type.
+         - Great for a diversity of workloads such as web servers or code repositories
+           - Balance between:
+             - Compute
+             - Memory
+             - Networking
 
-     - **Compute Optimized**
-
-       - Use cases:
-         - Compute Optimized instances are designed for applications that require high-performance processors.
-         - Ideal for compute-bound tasks that demand significant processing power.
-         - Suited for batch processing, media transcoding, high-performance web servers, and scientific modeling.
-         - Also beneficial for high-performance computing (HPC), dedicated gaming servers, and ad server engines.
-         - Suitable for machine learning inference and other compute-intensive applications.
-
-     - **Memory Optimized**
+     - **Compute Optimized** : C6a, C6g, C6gd, C6gn, C6i, C6id, C6in, C7a, C7g, C7gd, C7gn, C7i
 
        - Use cases:
-         - Designed for fast performance
-         - Ideal for workloads handling large data sets in memory
+         - Great for compute-intensive tasks that require high performance processors:
+           - Batch processing workloads
+           - Media transcoding
+           - High performance web servers
+           - High performance computing (HPC)
+           - Scientific modeling & machine learning
 
-     - **Accelerated Computing**
+     - **Memory Optimized** : R6a, R6g, R6gd, R6i, R6id, R6idn, R6in, R7a, R7g, R7gd, R7i, R7iz, X2gd, X2idn, X2iedn
+
+       - Use cases:
+         - Fast performance for workloads that process large data sets in memory
+         - High performance, relational/non-relational databases
+         - Distributed web scale cache stores
+         - In-memory databases optimized for BI (business intelligence)
+         - Applications performing real-time processing of big unstructured data
+
+     - **Accelerated Computing** : DL2q, G5g, Inf2, P5, Trn1, Trn1n
 
        - Use cases:
          - Accelerated computing instances use hardware accelerators or co-processors.
          - They perform functions like floating-point number calculations, graphics processing, or data pattern matching.
          - These functions are done more efficiently compared to software running on CPUs.
 
-     - **Storage Optimized**
+     - **Storage Optimized** : I4g, I4i, Im4gn, Is4gen
 
        - Use cases:
          - Designed for workloads needing high sequential read/write access to large data sets
@@ -254,7 +260,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
          - Local storage ensures faster access compared to network storage
          - Suitable for data-intensive tasks like database management, analytics, and data warehousing
 
-     - **HPC Optimized (High performance computing)**
+     - **HPC Optimized (High performance computing)** : Hpc6a, Hpc6id, Hpc7a, Hpc7g
 
        - Use cases:
          - HPC instances on AWS are designed for running high-performance computing workloads efficiently.
@@ -294,6 +300,12 @@ https://aws-solutions-architect-associate-notes.vercel.app
          - Launching new instances and running tests simultaneously is straightforward.
          - It's advised to measure application performance to select suitable instance types and confirm application architecture.
          - Rigorous load and scale testing is recommended to ensure desired application scalability.
+
+4. ### EC2 InstanceTypes - Example
+
+   - ![ec2-instance-example](./assests/images/ec2-instance-example.png)
+   - **_t2.micro is part of the AWS free tier (up to 750 hours per month)_**
+   - For more details [check here](https://instances.vantage.sh/)
 
 ## Amazon EC2 – Associate
 
