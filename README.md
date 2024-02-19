@@ -27,8 +27,8 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 9   | [Guidelines & Best Practices](#Guidelines-&-Best-Practices)               |
 |     | **Amazon EC2 – Basics**                                                   |
 | 1   | [What is Amazon EC2?](#what-is-Amazon-EC2)                                |
-| 1   | [EC2 sizing & configuration options](#EC2-sizing-&-configuration-options) |
-| 1   | [EC2 InstanceTypes - Overview](#EC2-InstanceTypes---Overview)             |
+| 2   | [EC2 sizing & configuration options](#EC2-sizing-&-configuration-options) |
+| 3   | [EC2 InstanceTypes - Overview](#EC2-InstanceTypes---Overview)             |
 
 ## AWS
 
@@ -215,7 +215,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
    - Different types of EC2 instances that are optimised for different use cases [Check here](https://aws.amazon.com/ec2/instance-types/)
 
-     - General Purpose
+     - **General Purpose**
 
        - Use cases:
          - General purpose instances offer balanced compute, memory, and networking resources.
@@ -223,7 +223,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
          - Ideal for applications like web servers and code repositories.
          - Provide versatility for various tasks without specializing in one resource type.
 
-     - Compute Optimized
+     - **Compute Optimized**
 
        - Use cases:
          - Compute Optimized instances are designed for applications that require high-performance processors.
@@ -232,20 +232,20 @@ https://aws-solutions-architect-associate-notes.vercel.app
          - Also beneficial for high-performance computing (HPC), dedicated gaming servers, and ad server engines.
          - Suitable for machine learning inference and other compute-intensive applications.
 
-     - Memory Optimized
+     - **Memory Optimized**
 
        - Use cases:
          - Designed for fast performance
          - Ideal for workloads handling large data sets in memory
 
-     - Accelerated Computing
+     - **Accelerated Computing**
 
        - Use cases:
          - Accelerated computing instances use hardware accelerators or co-processors.
          - They perform functions like floating-point number calculations, graphics processing, or data pattern matching.
          - These functions are done more efficiently compared to software running on CPUs.
 
-     - Storage Optimized
+     - **Storage Optimized**
 
        - Use cases:
          - Designed for workloads needing high sequential read/write access to large data sets
@@ -254,7 +254,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
          - Local storage ensures faster access compared to network storage
          - Suitable for data-intensive tasks like database management, analytics, and data warehousing
 
-     - HPC Optimized (High performance computing)
+     - **HPC Optimized (High performance computing)**
 
        - Use cases:
          - HPC instances on AWS are designed for running high-performance computing workloads efficiently.
@@ -263,7 +263,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
          - Suited for large-scale operations where performance is critical.
          - Tailored with high-performance processors to enhance computational capabilities.
 
-     - Instance Features
+     - **Instance Features**
 
        - Use cases:
 
@@ -282,7 +282,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
          - Cluster Networking
          - Intel Processor Features
 
-     - Measuring Instance Performance
+     - **Measuring Instance Performance**
 
        - Use cases:
 
