@@ -36,6 +36,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 8   | [EC2 Instances Purchasing Options](#EC2-Instances-Purchasing-Options)     |
 |     | **Amazon EC2 – Solutions Architect Associate Level**                      |
 | 1   | [Private vs Public IP (IPv4)](<#Private-vs-Public-IP-(IPv4)>)             |
+| 2   | [Placement groups](#Placement-groups)                                     |
 
 ## AWS
 
@@ -487,6 +488,53 @@ https://aws-solutions-architect-associate-notes.vercel.app
   - An Elastic IP is a public IPv4 IP you own as long as you don’t delete it
   - You can attach it to one instance at a time
   - You can only have 5 Elastic IP in your account (you can ask AWS to increase that).
+
+2. ### Placement groups
+
+- To handle your workload better, you can put a bunch of connected EC2 computers together in a placement group to control where they go.
+- Depending on what you're doing, you can set up a placement group in different ways:
+
+  - **Cluster** : Grouping instances into a low-latency cluster within one Availability Zone.
+
+    Pros:
+
+    - Excellent network speed (10 Gbps bandwidth) when using Enhanced Networking.
+
+    Cons:
+
+    - If the rack (a collection of servers) fails, all instances (computing units) fail simultaneously.
+
+    Use Case:
+
+    - Big Data tasks requiring speedy completion.
+    - Applications demanding ultra-low latency and high network speed.
+
+  - **Partition** : Distribute tasks to different pieces of equipment (up to 7 tasks per group in each area).
+
+    Pros:
+
+    - **Availability:** Spans across different availability zones (AZs), enhancing availability.
+    - **Reduced Risk:** Decreases the risk of simultaneous failures.
+    - **Isolation:** EC2 instances are on separate physical hardware, reducing the impact of hardware failures.
+
+    Cons:
+
+    - **Limitation:** Restricted to 7 instances per AZ per placement group.
+
+    Use Case:
+
+    - **Maximized Availability:** Ideal for applications needing maximum uptime.
+    - **Critical Applications:** Ensures isolation between instances, crucial for critical applications to prevent failure cascades.
+
+  - **Spread** : Distributing tasks or data across various sections (called partitions), each using different groups of servers within a single availability zone (AZ). It can handle hundreds of virtual servers (EC2 instances) per category (like Hadoop, Cassandra, or Kafka).
+
+    - Each "zone" (AZ) can have up to 7 separate parts.
+    - These parts can spread out across multiple zones.
+    - Hundreds of EC2 instances can be in use.
+    - Instances within a part don't share space with those in other parts.
+    - If one part fails, it only affects the instances in that part, not others.
+    - EC2 instances can access part-specific info.
+    - It's handy for systems like HDFS, HBase, Cassandra, or Kafka.
 
 ## Amazon EC2 – Instance Storage
 
