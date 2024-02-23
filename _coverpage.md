@@ -8,8 +8,8 @@
 
 - AWS
 - AWS Identity & Access Management (AWS IAM)
-- Amazon EC2 – Basics
-- Amazon EC2 – Associate
+- Amazon EC2 – Fundamentals
+- Amazon EC2 – Solutions Architect Associate Level
 - Amazon EC2 – Instance Storage
 
 [GitHub](https://github.com/asif-simform/aws-solutions-architect-associate-notes)

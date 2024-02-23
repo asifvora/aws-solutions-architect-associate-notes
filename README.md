@@ -25,7 +25,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 7   | [Permissions](#Permissions)                                               |
 | 8   | [Security Tools](#Security-Tools)                                         |
 | 9   | [Guidelines & Best Practices](#Guidelines-&-Best-Practices)               |
-|     | **Amazon EC2 – Basics**                                                   |
+|     | **Amazon EC2 – Fundamentals**                                             |
 | 1   | [What is Amazon EC2?](#what-is-Amazon-EC2)                                |
 | 2   | [EC2 sizing & configuration options](#EC2-sizing-&-configuration-options) |
 | 3   | [EC2 InstanceTypes - Overview](#EC2-InstanceTypes---Overview)             |
@@ -34,7 +34,8 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 6   | [Classic Ports](#Classic-Ports)                                           |
 | 7   | [SSH Summary Table](#SSH-Summary-Table)                                   |
 | 8   | [EC2 Instances Purchasing Options](#EC2-Instances-Purchasing-Options)     |
-|     | **Amazon EC2 – Associate**                                                |
+|     | **Amazon EC2 – Solutions Architect Associate Level**                      |
+| 1   | [Private vs Public IP (IPv4)](<#Private-vs-Public-IP-(IPv4)>)             |
 
 ## AWS
 
@@ -187,7 +188,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
    - Audit permissions of your account using IAM Credentials Report & IAM Access Advisor
    - **Never share IAM users & Access Keys**
 
-## Amazon EC2 – Basics
+## Amazon EC2 – Fundamentals
 
 1. ### What is Amazon EC2?
 
@@ -453,6 +454,61 @@ https://aws-solutions-architect-associate-notes.vercel.app
        - priceCapacityOptimized (recommended): pools with highest capacity available, then select the pool with the lowest price (best choice for most workloads)
      - Spot Fleets allow us to automatically request Spot Instances with the lowest price
 
-## Amazon EC2 – Associate
+## Amazon EC2 – Solutions Architect Associate Level
+
+1. ### Private vs Public IP (IPv4)
+
+- Networking has two sorts of IPs. IPv4 and IPv6:
+  - IPv4:1.160.10.240
+  - IPv6:3ffe:1900:4545:3:200:f8ff:fe21:67cf
+- IPv4 is still the most common format used online.
+- IPv6 is **newer** and solves problems for the Internet of Things (IoT).
+- IPv4 allows for 3.7 billion different addresses in the public space
+- IPv4: [0-255].[0-255].[0-255].[0-255].
+
+- **Public IP:**
+
+  - Public IP means the machine can be identified on the internet (WWW)
+  - Must be unique across the whole web (not two machines can have the same public IP).
+  - Can be geo-located easily
+
+- **Private IP:**
+
+  - Private IP means the machine can only be identified on a private network only
+  - The IP must be unique across the private network
+  - BUT two different private networks (two companies) can have the same IPs.
+  - Machines connect to WWW using a NAT + internet gateway (a proxy)
+  - Only a specified range of IPs can be used as private IP
+
+- **Private IP:**
+
+  - When you stop and then start an EC2 instance, it can change its public IP.
+  - If you need to have a fixed public IP for your instance, you need an Elastic IP
+  - An Elastic IP is a public IPv4 IP you own as long as you don’t delete it
+  - You can attach it to one instance at a time
+  - You can only have 5 Elastic IP in your account (you can ask AWS to increase that).
 
 ## Amazon EC2 – Instance Storage
+
+# 🛡️ License
+
+This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
+
+# 👨‍💻 Author
+
+### 👤 Asif Vora
+
+- Github: [@asifvora](https://github.com/asifvora)
+- LinkedIn: [@asif-vora](https://www.linkedin.com/in/asif-vora/)
+- Twitter: [@007_dark_shadow](https://twitter.com/007_dark_shadow)
+- Instagram: [@007_dark_shadow](https://www.instagram.com/007_dark_shadow/)
+
+# 🍰 Contributing
+
+- Please contribute using [GitHub Flow](https://guides.github.com/introduction/flow). Create a branch, add commits, and [open a pull request](https://github.com/asif-simform/MERN-Stack/compare).
+
+- Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details.
+
+# 🙏 Support
+
+This project needs a ⭐️ from you. Don't forget to leave a star ⭐️
