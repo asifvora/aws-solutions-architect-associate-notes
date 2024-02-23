@@ -37,6 +37,8 @@ https://aws-solutions-architect-associate-notes.vercel.app
 |     | **Amazon EC2 – Solutions Architect Associate Level**                      |
 | 1   | [Private vs Public IP (IPv4)](<#Private-vs-Public-IP-(IPv4)>)             |
 | 2   | [Placement groups](#Placement-groups)                                     |
+| 3   | [Elastic Network Interfaces (ENI)](<#Elastic-Network-Interfaces-(ENI)>)   |
+| 3   | [EC2 Hibernate](#EC2-Hibernate)   |
 
 ## AWS
 
@@ -536,6 +538,41 @@ https://aws-solutions-architect-associate-notes.vercel.app
     - EC2 instances can access part-specific info.
     - It's handy for systems like HDFS, HBase, Cassandra, or Kafka.
 
+3. ### Elastic Network Interfaces (ENI)
+
+- Logical component in a VPC that represents a **virtual network card**
+- The ENI can have the following attributes:
+  - Primary private IPv4, one or more secondary IPv4
+  - A primary IPv6 address from the IPv6 address range of your VPC
+  - One or more secondary private IPv4 addresses from the IPv4 address range of your VPC
+  - One Elastic IP (IPv4) per private IPv4
+  - One Public IPv4
+  - One or more IPv6 addresses
+  - One or more security groups
+  - A MAC address
+  - A source/destination check flag
+  - A description
+
+4. ### EC2 Hibernate
+  - EC2 Hibernate:
+    - The in-memory (RAM) state is preserved
+    - The instance boot is much faster! (the OS is not stopped / restarted)
+    - Under the hood: the RAM state is written to a file in the root EBS volume
+    - The root EBS volume must be encrypted
+
+  - Use cases:
+    - Long-running processing
+    - Saving the RAM state
+    - Services that take time to initialize
+
+  - Good to know
+    - Supported Instance Families – C3, C4, C5, I3, M3, M4, R3, R4,T2,T3, ...
+    - Instance RAM Size – must be less than 150 GB.
+    - Instance Size – not supported for bare metal instances.
+    - AMI – Amazon Linux 2, Linux AMI, Ubuntu, RHEL, CentOS & Windows... 
+    - Root Volume – must be EBS, encrypted, not instance store, and large
+    - Available for On-Demand, Reser ved and Spot Instances 
+    - An instance can NOT be hibernated more than 60 days
 ## Amazon EC2 – Instance Storage
 
 # 🛡️ License
