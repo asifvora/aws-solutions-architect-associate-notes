@@ -38,7 +38,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 1   | [Private vs Public IP (IPv4)](<#Private-vs-Public-IP-(IPv4)>)             |
 | 2   | [Placement groups](#Placement-groups)                                     |
 | 3   | [Elastic Network Interfaces (ENI)](<#Elastic-Network-Interfaces-(ENI)>)   |
-| 3   | [EC2 Hibernate](#EC2-Hibernate)   |
+| 3   | [EC2 Hibernate](#EC2-Hibernate)                                           |
 
 ## AWS
 
@@ -193,269 +193,308 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
 ## Amazon EC2 – Fundamentals
 
-1. ### What is Amazon EC2?
+1.  ### What is Amazon EC2?
 
-   - EC2 is one of the most popular of AWS’ offering
-   - EC2 = Elastic Compute Cloud = Infrastructure as a Service
-   - It mainly consists in the capability of :
-     - Renting virtual machines (EC2 - Elastic Compute Cloud)
-     - Storing data on virtual drives (EBS - Elastic Block Store)
-     - Distributing load across machines (ELB - Elastic Load Balancing)
-     - Scaling the services using an auto-scaling group (ASG - Auto Scaling Group )
+    - EC2 is one of the most popular of AWS’ offering
+    - EC2 = Elastic Compute Cloud = Infrastructure as a Service
+    - It mainly consists in the capability of :
+      - Renting virtual machines (EC2 - Elastic Compute Cloud)
+      - Storing data on virtual drives (EBS - Elastic Block Store)
+      - Distributing load across machines (ELB - Elastic Load Balancing)
+      - Scaling the services using an auto-scaling group (ASG - Auto Scaling Group )
 
-2. ### EC2 sizing & configuration options
+2.  ### EC2 sizing & configuration options
 
-   - Operating System: Linux, Windows or Mac OS
-   - How much **CPU** and **RAM**
-   - Storage space
-     - Network-attached (**EBS** - Elastic Block Store & **EFS** - Elastic File System)
-     - Hrdware (EC2 Instance Store)
-   - Network card: Speed of the card, Public IP address
-   - Firewall rules: Security group
-   - Bootstrap script (configure at first launch): EC2 User Data
-     - Used to automate boot tasks
-       - Example:
-         - Installing updates
-         - Installing software
-         - Downloading common files from the internet
-         - Anything you can think of
-     - Runs with the root user
+    - Operating System: Linux, Windows or Mac OS
+    - How much **CPU** and **RAM**
+    - Storage space
+      - Network-attached (**EBS** - Elastic Block Store & **EFS** - Elastic File System)
+      - Hrdware (EC2 Instance Store)
+    - Network card: Speed of the card, Public IP address
+    - Firewall rules: Security group
+    - Bootstrap script (configure at first launch): EC2 User Data
+      - Used to automate boot tasks
+        - Example:
+          - Installing updates
+          - Installing software
+          - Downloading common files from the internet
+          - Anything you can think of
+      - Runs with the root user
 
-3. ### EC2 InstanceTypes - Overview
+3.  ### EC2 InstanceTypes - Overview
 
-   - Different types of EC2 instances that are optimised for different use cases [Check here](https://aws.amazon.com/ec2/instance-types/)
+    - Different types of EC2 instances that are optimised for different use cases [Check here](https://aws.amazon.com/ec2/instance-types/)
 
-     - **General Purpose** : M6a, M6g, M6gd, M6i, M6id, M6idn, M6in, M7a, M7g, M7gd, M7i, M7i-flex, T4g
+    - **General Purpose** : M6a, M6g, M6gd, M6i, M6id, M6idn, M6in, M7a, M7g, M7gd, M7i, M7i-flex, T4g
 
-       - Use cases:
-         - Great for a diversity of workloads such as web servers or code repositories
-           - Balance between:
-             - Compute
-             - Memory
-             - Networking
+      - Use cases:
+        - Great for a diversity of workloads such as web servers or code repositories
+          - Balance between:
+            - Compute
+            - Memory
+            - Networking
+      - Series:
+        - A Series (Medium, Large) : A1
+        - M Series (Large) : M4, M5, M5a, M5ad, M5d
+        - T Series : T2, T3, T3a
 
-     - **Compute Optimized** : C6a, C6g, C6gd, C6gn, C6i, C6id, C6in, C7a, C7g, C7gd, C7gn, C7i
+    - **Compute Optimized** :
 
-       - Use cases:
-         - Great for compute-intensive tasks that require high performance processors:
-           - Batch processing workloads
-           - Media transcoding
-           - High performance web servers
-           - High performance computing (HPC)
-           - Scientific modeling & machine learning
+      - Use cases:
 
-     - **Memory Optimized** : R6a, R6g, R6gd, R6i, R6id, R6idn, R6in, R7a, R7g, R7gd, R7i, R7iz, X2gd, X2idn, X2iedn
+        - Great for compute-intensive tasks that require high performance processors:
+          - Web Server
+          - Batch processing workloads
+          - Media transcoding
+          - High performance web servers
+          - High performance computing (HPC)
+          - Scientific modeling & machine learning
 
-       - Use cases:
-         - Fast performance for workloads that process large data sets in memory
-         - High performance, relational/non-relational databases
-         - Distributed web scale cache stores
-         - In-memory databases optimized for BI (business intelligence)
-         - Applications performing real-time processing of big unstructured data
+      - Series:
+        - C Series : C4, C5, C5n, C6a, C6g, C6gd, C6gn, C6i, C6id, C6in, C7a, C7g, C7gd, C7gn, C7i
 
-     - **Accelerated Computing** : DL2q, G5g, Inf2, P5, Trn1, Trn1n
+    - **Memory Optimized** : R6a, R6g, R6gd, R6i, R6id, R6idn, R6in, R7a, R7g, R7gd, R7i, R7iz, X2gd, X2idn, X2iedn
 
-       - Use cases:
-         - Accelerated computing instances use hardware accelerators or co-processors.
-         - They perform functions like floating-point number calculations, graphics processing, or data pattern matching.
-         - These functions are done more efficiently compared to software running on CPUs.
+      - Use cases:
 
-     - **Storage Optimized** : I4g, I4i, Im4gn, Is4gen
+        - Fast performance for workloads that process large data sets in memory
+        - High performance, relational/non-relational databases
+        - Distributed web scale cache stores
+        - In-memory databases optimized for BI (business intelligence)
+        - Applications performing real-time processing of big unstructured data
 
-       - Use cases:
-         - Designed for workloads needing high sequential read/write access to large data sets
-         - Optimized for delivering tens of thousands of low-latency, random IOPS
-         - Ideal for applications with heavy data processing needs
-         - Local storage ensures faster access compared to network storage
-         - Suitable for data-intensive tasks like database management, analytics, and data warehousing
+      - Series:
+        - R Series : R4, R5, R5a, R5d
+        - X Series : X1, X1e
+        - Z Series : Z1d
 
-     - **HPC Optimized (High performance computing)** : Hpc6a, Hpc6id, Hpc7a, Hpc7g
+    - **Accelerated Computing** : DL2q, G5g, Inf2, P5, Trn1, Trn1n
 
-       - Use cases:
-         - HPC instances on AWS are designed for running high-performance computing workloads efficiently.
-         - They offer optimized price-performance for scaling HPC tasks.
-         - Ideal for applications requiring robust processing power, like complex simulations and deep learning tasks.
-         - Suited for large-scale operations where performance is critical.
-         - Tailored with high-performance processors to enhance computational capabilities.
+      - Use cases:
 
-     - **Instance Features**
+        - Accelerated computing instances use hardware accelerators or co-processors.
+        - They perform functions like floating-point number calculations, graphics processing, or data pattern matching.
+        - These functions are done more efficiently compared to software running on CPUs.
 
-       - Use cases:
+      - Series:
+        - P Series : P2, P3
+        - G Series : G2, G3
+        - F Series : F1
 
-         - **Scalability**: Easily scale your applications up or down based on demand.
-         - **Management Tools**: Access a variety of tools to streamline deployment and management processes.
-         - **Monitoring**: Monitor the performance of your applications in real-time.
-         - **Flexibility**: Choose from a wide range of instance types to suit your specific needs.
-         - **Security**: Benefit from built-in security features to protect your applications and data.
-         - **Integration**: Seamlessly integrate with other AWS services for enhanced functionality.
-         - **Cost-Effectiveness**: Pay only for the resources you use, with cost-effective pricing models.
-         - **Reliability**: Rely on Amazon's robust infrastructure for high availability and reliability.
+    - **Storage Optimized** : I4g, I4i, Im4gn, Is4gen
 
-         - Burstable Performance Instances
-         - Multiple Storage Options
-         - EBS-optimized Instances
-         - Cluster Networking
-         - Intel Processor Features
+      - Use cases:
 
-     - **Measuring Instance Performance**
+        - Designed for workloads needing high sequential read/write access to large data sets
+        - Optimized for delivering tens of thousands of low-latency, random IOPS
+        - Ideal for applications with heavy data processing needs
+        - Local storage ensures faster access compared to network storage
+        - Suitable for data-intensive tasks like database management, analytics, and data warehousing
 
-       - Use cases:
+      - Series:
+        - I Series : I3, I3e
+        - D Series : D2
+        - H Series : H1
 
-         - Amazon EC2 offers various instance types with different specifications:
-           - CPU
-           - Memory
-           - Disk
-           - Networking
-         - Launching new instances and running tests simultaneously is straightforward.
-         - It's advised to measure application performance to select suitable instance types and confirm application architecture.
-         - Rigorous load and scale testing is recommended to ensure desired application scalability.
+    - **HPC Optimized (High performance computing)** : Hpc6a, Hpc6id, Hpc7a, Hpc7g
 
-4. ### EC2 InstanceTypes - Example
+      - Use cases:
 
-   - ![ec2-instance-example](./assests/images/ec2-instance-example.png)
-   - **_t2.micro is part of the AWS free tier (up to 750 hours per month)_**
-   - For more details [check here](https://instances.vantage.sh/)
+        - HPC instances on AWS are designed for running high-performance computing workloads efficiently.
+        - They offer optimized price-performance for scaling HPC tasks.
+        - Ideal for applications requiring robust processing power, like complex simulations and deep learning tasks.
+        - Suited for large-scale operations where performance is critical.
+        - Tailored with high-performance processors to enhance computational capabilities.
 
-5. ### Introduction to Security Groups
+      - Series:
+        - U Series : U6, U9, U12
 
-   - Fundamental of network security in AWS
-   - They control how traffic is allowed into or out of our EC2 Instances.
-     - Inbound traffic
-     - Outbound traffic
-   - Only contain **allow** rules
-   - Rules can reference by IP or by security group
-   - Acting as a “firewall” on EC2 instances
-     - Access to Ports
-     - Authorised IP ranges – IPv4 and IPv6
-     - Control of inbound network (from other to the instance)
-     - Control of outbound network (from the instance to other)
-   - Can be attached to multiple instances
-   - It’s good to maintain one separate security group for SSH access
-   - All inbound traffic is **blocked** by default
-   - All outbound traffic is **authorised** by default
+    - **Previous Generation Instance** :
 
-6. ### Classic Ports
+      - Series:
+        - T1, M1, C1, CC2, M2, CR1, CG1, i2, HS1, M3,C3, R3
 
-   - 22 = SSH (Secure Shell) - log into a Linux instance
-   - 21 = FTP (File Transfer Protocol) – upload files into a file share
-   - 22 = SFTP (Secure File Transfer Protocol) – upload files using SSH
-   - 80 = HTTP – access unsecured websites
-   - 443 = HTTPS – access secured websites
-   - 3389 = RDP (Remote Desktop Protocol) – log into a Windows instance
+    - **Instance Features**
 
-7. ### SSH Summary Table
+      - Use cases:
 
-   |              | SSH | Putty | EC2 Instance Connect |
-   | ------------ | --- | ----- | -------------------- |
-   | Mac          | ☑   |       | ☑                    |
-   | Linux        | ☑   |       | ☑                    |
-   | Window < 10  |     | ☑     | ☑                    |
-   | Window >= 10 | ☑   | ☑     | ☑                    |
+        - **Scalability**: Easily scale your applications up or down based on demand.
+        - **Management Tools**: Access a variety of tools to streamline deployment and management processes.
+        - **Monitoring**: Monitor the performance of your applications in real-time.
+        - **Flexibility**: Choose from a wide range of instance types to suit your specific needs.
+        - **Security**: Benefit from built-in security features to protect your applications and data.
+        - **Integration**: Seamlessly integrate with other AWS services for enhanced functionality.
+        - **Cost-Effectiveness**: Pay only for the resources you use, with cost-effective pricing models.
+        - **Reliability**: Rely on Amazon's robust infrastructure for high availability and reliability.
 
-   - SSH using mac:
+        - Burstable Performance Instances
+        - Multiple Storage Options
+        - EBS-optimized Instances
+        - Cluster Networking
+        - Intel Processor Features
 
-     - ssh -i EC2-instatnce-key ec2-user@<public-ip> (ex: ec2-user@35.180.242.162)
-     - ssh -i ec2-test-v2.pem ec2-user@35.180.242.162
+    - **Measuring Instance Performance**
 
-   - EC2 Instance Connect
-     - Connect to your EC2 instance within your browser
-     - No need to use your key file that was downloaded (Works only out-of-the-box with Amazon Linux 2)
-     - Goto EC2 > Instances > <your-instance> > Connect to instance > Connect action
+      - Use cases:
 
-8. ### EC2 Instances Purchasing Options
+            - Amazon EC2 offers various instance types with different specifications:
+              - CPU
+              - Memory
+              - Disk
+              - Networking
+            - Launching new instances and running tests simultaneously is straightforward.
+            - It's advised to measure application performance to select suitable instance types and confirm application architecture.
+            - Rigorous load and scale testing is recommended to ensure desired application scalability.
 
-   - **On-Demand Instances** – short workload, predictable pricing, pay by second
+    > [!NOTE]
+    > We can make 20 instance in a region and if we require more than we need to request AWS.
 
-     - Pay for what you use:
-       - Linux or Windows - billing per second, after the first minute
-       - All other operating systems - billing per hour
-     - Has the highest cost but no upfront payment
-     - No long-term commitment
-     - Recommended for short-term and un-interrupted workloads, where you can't predict how the application will behave
+4.  ### EC2 InstanceTypes - Example
 
-   - **Reserved** (1 & 3 years)
+    - ![ec2-instance-example](./assests/images/ec2-instance-example.png)
+    - **_t2.micro is part of the AWS free tier (up to 750 hours per month)_**
+    - For more details [check here](https://instances.vantage.sh/)
 
-     - Reserved Instances – long workloads
-     - Convertible Reserved Instances – long workloads with flexible instances
-     - You reserve a specific instance attributes (Instance Type, Region,Tenancy, OS)
-     - Reservation Period – 1 year (+discount) or 3 years (+++discount)
-     - Payment Options – No Upfront (+), Par tial Upfront (++), All Upfront (+++)
-     - Reserved Instance’s Scope – Regional or Zonal (reserve capacity in an AZ)
-     - Recommended for steady-state usage applications (think database)
-     - You can buy and sell in the Reserved Instance Marketplace
-     - Convertible Reserved Instance
-     - Can change the EC2 instance type, instance family, OS, scope and tenancy - Up to 66% discount
+5.  ### Introduction to Security Groups
 
-   - **Savings Plans** (1 & 3 years) – commitment to an amount of usage, long workload - Spot Instances – short workloads, cheap, can lose instances (less reliable)
+    - Fundamental of network security in AWS
+    - They control how traffic is allowed into or out of our EC2 Instances.
+      - Inbound traffic
+      - Outbound traffic
+    - Only contain **allow** rules
+    - Rules can reference by IP or by security group
+    - Acting as a “firewall” on EC2 instances
+      - Access to Ports
+      - Authorised IP ranges – IPv4 and IPv6
+      - Control of inbound network (from other to the instance)
+      - Control of outbound network (from the instance to other)
+    - Can be attached to multiple instances
+    - It’s good to maintain one separate security group for SSH access
+    - All inbound traffic is **blocked** by default
+    - All outbound traffic is **authorised** by default
 
-     - Get a discount based on long-term usage (up to 72% - same as RIs)
-     - Commit to a certain type of usage ($10/hour for 1 or 3 years)
-     - Usage beyond EC2 Savings Plans is billed at the On-Demand price
-     - Locked to a specific instance family & AWS region (e.g., M5 in us-east-1)
-     - Flexible across:
-       - Instance Size (e.g., m5.xlarge, m5.2xlarge)
-       - OS (e.g., Linux, Windows)
-       - Tenancy (Host, Dedicated, Default)
+6.  ### Classic Ports
 
-   - **Spot Instances** -
+    - 22 = SSH (Secure Shell) - log into a Linux instance
+    - 21 = FTP (File Transfer Protocol) – upload files into a file share
+    - 22 = SFTP (Secure File Transfer Protocol) – upload files using SSH
+    - 80 = HTTP – access unsecured websites
+    - 443 = HTTPS – access secured websites
+    - 3389 = RDP (Remote Desktop Protocol) – log into a Windows instance
 
-     - Can get a discount of up to 90% compared to On-demand
-     - Instances that you can “lose” at any point of time if your max price is less than the current spot price
-     - The MOST cost-efficient instances in AWS
-     - Useful for workloads that are resilient to failure
-       - Batch jobs
-       - Data analysis
-       - Image processing
-       - Any distributed workloads
-       - Workloads with a flexible start and end time
-     - Not suitable for critical jobs or databases
+7.  ### SSH Summary Table
 
-   - **Dedicated Hosts** – book an entire physical server, control instance placement
+    |              | SSH | Putty | EC2 Instance Connect |
+    | ------------ | --- | ----- | -------------------- |
+    | Mac          | ☑   |       | ☑                    |
+    | Linux        | ☑   |       | ☑                    |
+    | Window < 10  |     | ☑     | ☑                    |
+    | Window >= 10 | ☑   | ☑     | ☑                    |
 
-     - A physical server with EC2 instance capacity fully dedicated to your use
-     - Allows you address **compliance requirements** and **use your existing server- bound software licenses** (per-socket, per-core, pe—VM software licenses)
-     - Purchasing Options:
-       - **On-demand** – pay per second for active Dedicated Host
-       - **Reserved** - 1 or 3 years (No Upfront, Partial Upfront,All Upfront)
-     - The most expensive option
-     - Useful for software that have complicated licensing model (BYOL – Bring Your
-       Own License)
-     - Or for companies that have strong regulatory or compliance needs
+    - SSH using mac:
 
-   - **Dedicated Instances** – no other customers will share your hardware
+      - ssh -i EC2-instatnce-key ec2-user@<public-ip> (ex: ec2-user@35.180.242.162)
+      - ssh -i ec2-test-v2.pem ec2-user@35.180.242.162
 
-     - Instances run on hardware that’s dedicated to you
-     - May share hardware with other instances in same account
-     - No control over instance placement (can move hardware after Stop / Start)
+    - EC2 Instance Connect
+      - Connect to your EC2 instance within your browser
+      - No need to use your key file that was downloaded (Works only out-of-the-box with Amazon Linux 2)
+      - Goto EC2 > Instances > <your-instance> > Connect to instance > Connect action
 
-   - ![dedicated-instance-vs-host](./assests/images/dedicated-instance-vs-host.png)
+8.  ### EC2 Instances Purchasing Options
 
-   - **Capacity Reservations** – reserve capacity in a specific AZ for any duration
+    - **On-Demand Instances** – short workload, predictable pricing, pay by second
 
-     - Reserve On-Demand instances capacity in a specific AZ for any duration
-     - You always have access to EC2 capacity when you need it
-     - No time commitment (create/cancel anytime), no billing discounts
-     - Combine with Regional Reserved Instances and Savings Plans to benefit from billing discounts
-     - You’re charged at On-Demand rate whether you run instances or not
-     - Suitable for short-term, uninterrupted workloads that needs to be in a specific AZ
+      - Pay for what you use:
+        - Linux or Windows - billing per second, after the first minute
+        - All other operating systems - billing per hour
+      - Has the highest cost but no upfront payment
+      - No long-term commitment
+      - Recommended for short-term and un-interrupted workloads, where you can't predict how the application will behave
 
-   - **EC2 Spot Instance Requests**
+    - **Reserved/Schedule Instances** (1 & 3 years)
 
-     - Can get a discount of up to 90% compared to On-demand
-     - Define **max spot price** and get the instance while **current spot price** < **max**
-       - If the current spot price > your max price you can choose to stop or terminate your instance with a 2 minutes grace period.
-     - Used for batch jobs, data analysis, or workloads that are resilient to failures.
-     - Not great for critical jobs or databases
+      - Reserved Instances – long workloads
+      - Convertible Reserved Instances – long workloads with flexible instances
+      - You reserve a specific instance attributes (Instance Type, Region,Tenancy, OS)
+      - Reservation Period – 1 year (+discount) or 3 years (+++discount)
+      - Payment Options – No Upfront (+), Par tial Upfront (++), All Upfront (+++)
+      - Reserved Instance’s Scope – Regional or Zonal (reserve capacity in an AZ)
+      - Recommended for steady-state usage applications (think database)
+      - You can buy and sell in the Reserved Instance Marketplace
+      - Convertible Reserved Instance
+      - Can change the EC2 instance type, instance family, OS, scope and tenancy - Up to 66% discount
 
-   - **Spot Fleets**
-     - Spot Fleets = set of Spot Instances + (optional) On-Demand Instances
-     - The Spot Fleet will try to meet the target capacity with price constraints
-     - Strategies to allocate Spot Instances:
-       - lowestPrice: from the pool with the lowest price (cost optimization, short workload)
-       - diversified: distributed across all pools (great for availability, long workloads)
-       - capacityOptimized: pool with the optimal capacity for the number of instances
-       - priceCapacityOptimized (recommended): pools with highest capacity available, then select the pool with the lowest price (best choice for most workloads)
-     - Spot Fleets allow us to automatically request Spot Instances with the lowest price
+    - **Savings Plans** (1 & 3 years) – commitment to an amount of usage, long workload - Spot Instances – short workloads, cheap, can lose instances (less reliable)
+
+      - Get a discount based on long-term usage (up to 72% - same as RIs)
+      - Commit to a certain type of usage ($10/hour for 1 or 3 years)
+      - Usage beyond EC2 Savings Plans is billed at the On-Demand price
+      - Locked to a specific instance family & AWS region (e.g., M5 in us-east-1)
+      - Flexible across:
+        - Instance Size (e.g., m5.xlarge, m5.2xlarge)
+        - OS (e.g., Linux, Windows)
+        - Tenancy (Host, Dedicated, Default)
+
+    - **Spot Instances** -
+
+      - Can get a discount of up to 90% compared to On-demand
+      - Instances that you can “lose” at any point of time if your max price is less than the current spot price
+      - The MOST cost-efficient instances in AWS
+      - Useful for workloads that are resilient to failure
+        - Batch jobs
+        - Data analysis
+        - Image processing
+        - Any distributed workloads
+        - Workloads with a flexible start and end time
+      - Not suitable for critical jobs or databases
+
+    - **Dedicated Hosts** – book an entire physical server, control instance placement
+
+      - A physical server with EC2 instance capacity fully dedicated to your use
+      - Allows you address **compliance requirements** and **use your existing server- bound software licenses** (per-socket, per-core, pe—VM software licenses)
+      - Purchasing Options:
+        - **On-demand** – pay per second for active Dedicated Host
+        - **Reserved** - 1 or 3 years (No Upfront, Partial Upfront,All Upfront)
+      - The most expensive option
+      - Useful for software that have complicated licensing model (BYOL – Bring Your
+        Own License)
+      - Or for companies that have strong regulatory or compliance needs
+
+    - **Dedicated Instances** – no other customers will share your hardware
+
+      - Instances run on hardware that’s dedicated to you
+      - May share hardware with other instances in same account
+      - No control over instance placement (can move hardware after Stop / Start)
+
+    - ![dedicated-instance-vs-host](./assests/images/dedicated-instance-vs-host.png)
+
+    - **Capacity Reservations** – reserve capacity in a specific AZ for any duration
+
+      - Reserve On-Demand instances capacity in a specific AZ for any duration
+      - You always have access to EC2 capacity when you need it
+      - No time commitment (create/cancel anytime), no billing discounts
+      - Combine with Regional Reserved Instances and Savings Plans to benefit from billing discounts
+      - You’re charged at On-Demand rate whether you run instances or not
+      - Suitable for short-term, uninterrupted workloads that needs to be in a specific AZ
+
+    - **EC2 Spot Instance Requests**
+
+      - Can get a discount of up to 90% compared to On-demand
+      - Define **max spot price** and get the instance while **current spot price** < **max**
+        - If the current spot price > your max price you can choose to stop or terminate your instance with a 2 minutes grace period.
+      - Used for batch jobs, data analysis, or workloads that are resilient to failures.
+      - Not great for critical jobs or databases
+
+    - **Spot Fleets**
+      - Spot Fleets = set of Spot Instances + (optional) On-Demand Instances
+      - The Spot Fleet will try to meet the target capacity with price constraints
+      - Strategies to allocate Spot Instances:
+        - lowestPrice: from the pool with the lowest price (cost optimization, short workload)
+        - diversified: distributed across all pools (great for availability, long workloads)
+        - capacityOptimized: pool with the optimal capacity for the number of instances
+        - priceCapacityOptimized (recommended): pools with highest capacity available, then select the pool with the lowest price (best choice for most workloads)
+      - Spot Fleets allow us to automatically request Spot Instances with the lowest price
 
 ## Amazon EC2 – Solutions Architect Associate Level
 
@@ -483,7 +522,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
   - Machines connect to WWW using a NAT + internet gateway (a proxy)
   - Only a specified range of IPs can be used as private IP
 
-- **Private IP:**
+- **Elastic IP:**
 
   - When you stop and then start an EC2 instance, it can change its public IP.
   - If you need to have a fixed public IP for your instance, you need an Elastic IP
@@ -554,25 +593,29 @@ https://aws-solutions-architect-associate-notes.vercel.app
   - A description
 
 4. ### EC2 Hibernate
-  - EC2 Hibernate:
-    - The in-memory (RAM) state is preserved
-    - The instance boot is much faster! (the OS is not stopped / restarted)
-    - Under the hood: the RAM state is written to a file in the root EBS volume
-    - The root EBS volume must be encrypted
 
-  - Use cases:
-    - Long-running processing
-    - Saving the RAM state
-    - Services that take time to initialize
+- EC2 Hibernate:
 
-  - Good to know
-    - Supported Instance Families – C3, C4, C5, I3, M3, M4, R3, R4,T2,T3, ...
-    - Instance RAM Size – must be less than 150 GB.
-    - Instance Size – not supported for bare metal instances.
-    - AMI – Amazon Linux 2, Linux AMI, Ubuntu, RHEL, CentOS & Windows... 
-    - Root Volume – must be EBS, encrypted, not instance store, and large
-    - Available for On-Demand, Reser ved and Spot Instances 
-    - An instance can NOT be hibernated more than 60 days
+  - The in-memory (RAM) state is preserved
+  - The instance boot is much faster! (the OS is not stopped / restarted)
+  - Under the hood: the RAM state is written to a file in the root EBS volume
+  - The root EBS volume must be encrypted
+
+- Use cases:
+
+  - Long-running processing
+  - Saving the RAM state
+  - Services that take time to initialize
+
+- Good to know
+  - Supported Instance Families – C3, C4, C5, I3, M3, M4, R3, R4,T2,T3, ...
+  - Instance RAM Size – must be less than 150 GB.
+  - Instance Size – not supported for bare metal instances.
+  - AMI – Amazon Linux 2, Linux AMI, Ubuntu, RHEL, CentOS & Windows...
+  - Root Volume – must be EBS, encrypted, not instance store, and large
+  - Available for On-Demand, Reser ved and Spot Instances
+  - An instance can NOT be hibernated more than 60 days
+
 ## Amazon EC2 – Instance Storage
 
 # 🛡️ License
