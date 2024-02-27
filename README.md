@@ -38,7 +38,17 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 1   | [Private vs Public IP (IPv4)](<#Private-vs-Public-IP-(IPv4)>)             |
 | 2   | [Placement groups](#Placement-groups)                                     |
 | 3   | [Elastic Network Interfaces (ENI)](<#Elastic-Network-Interfaces-(ENI)>)   |
-| 3   | [EC2 Hibernate](#EC2-Hibernate)                                           |
+| 4   | [EC2 Hibernate](#EC2-Hibernate)                                           |
+|     | **Amazon Amazon EC2 – Instance Storage**                                  |
+| 1   | [EBS Overview](#EBS-Overview)                                             |
+| 2   | [EBS Snapshots](#EBS-Snapshots)                                           |
+| 3   | [AMI Overview](#AMI-Overview)                                             |
+| 4   | [EBS Volume Types](#EBS-Volume-Types)                                     |
+| 5   | [EBS Multi-Attach](#EBS-Multi-Attach)                                     |
+| 6   | [EBS Encryption](#EBS-Encryption)                                         |
+| 7   | [Amazon EFS](#Amazon-EFS)                                                 |
+| 8   | [EFS Vs EBS](#EFS-Vs-EBS)                                                 |
+| 9   | [Amazon EFS](#Amazon-EFS)                                                 |
 
 ## AWS
 
@@ -617,6 +627,54 @@ https://aws-solutions-architect-associate-notes.vercel.app
   - An instance can NOT be hibernated more than 60 days
 
 ## Amazon EC2 – Instance Storage
+
+1. ### EBS Overview
+
+- An EBS (**Elastic Block Store**) Volume is a network drive you can attach to your instances while they run
+- It allows your instances to persist data, even after their termination
+- They can only be mounted to one instance at a time (at the CCP level)
+- They are bound to a specific availability zone
+- Analogy:Think of them as a “network USB stick”
+- Free tier: 30 GB of free EBS storage of type General Purpose (SSD) or Magnetic per month
+
+- It’s a network drive (i.e. not a physical drive)
+  - It uses the network to communicate the instance, which means there might be a bit of latency
+  - It can be detached from an EC2 instance and attached to another one quickly
+- It’s locked to an Availability Zone (AZ)
+  - An EBS Volume in us-east-1a cannot be attached to us-east-1b
+  - To move a volume across, you first need to snapshot it
+- Have a provisioned capacity (size in GBs, and IOPS)
+
+  - You get billed for all the provisioned capacity
+  - You can increase the capacity of the drive over time
+
+- Controls the EBS behaviour when an EC2 instance terminates
+  - By default, the root EBS volume is deleted (attribute enabled)
+  - By default, any other attached EBS volume is not deleted (attribute disabled)
+- This can be controlled by the AWS console / AWS CLI
+- **Use case**: preserve root volume when instance is terminated
+
+2. ### EBS Snapshots
+
+3. ### AMI Overview
+
+4. ### EBS Volume Types
+
+5. ### EBS Encryption
+
+6. ### EBS Amazon EFS
+
+7. ### EFS Vs EBS
+
+8. ### EFS Vs EBS
+
+| 2 | [EBS Snapshots](#EBS-Snapshots) |
+| 3 | [AMI Overview](#AMI-Overview) |
+| 4 | [EBS Volume Types](#EBS-Volume-Types) |
+| 5 | [EBS Multi-Attach](#EBS-Multi-Attach) |
+| 6 | [EBS Encryption](#EBS-Encryption) |
+| 7 | [Amazon EFS](#Amazon-EFS) |
+| 8 | [EFS Vs EBS](#EFS-Vs-EBS) |
 
 # 🛡️ License
 
