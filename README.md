@@ -656,6 +656,21 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
 2. ### EBS Snapshots
 
+  - Make a backup (snapshot) of your EBS volume at a point in time
+  - Not necessary to detach volume to do snapshot, but recommended 
+  - Can copy snapshots across AZ or Region
+
+  - **Features**
+    - EBS Snapshot Archive
+      > Move a Snapshot to an "archive tier".
+      > Restoring from the archive takes 24 to 72 hours.
+    - Recycle Bin for EBS Snapshots
+      > To retain deleted snapshots for recovery after accidental deletion
+      > Specify retention (from 1 day to 1 year)
+    - Fast Snapshot Restore (FSR)
+      > Force full initialization of snapshot to have no latency on the first use ($$$)
+
+
 3. ### AMI Overview
 
 4. ### EBS Volume Types
@@ -667,14 +682,6 @@ https://aws-solutions-architect-associate-notes.vercel.app
 7. ### EFS Vs EBS
 
 8. ### EFS Vs EBS
-
-| 2 | [EBS Snapshots](#EBS-Snapshots) |
-| 3 | [AMI Overview](#AMI-Overview) |
-| 4 | [EBS Volume Types](#EBS-Volume-Types) |
-| 5 | [EBS Multi-Attach](#EBS-Multi-Attach) |
-| 6 | [EBS Encryption](#EBS-Encryption) |
-| 7 | [Amazon EFS](#Amazon-EFS) |
-| 8 | [EFS Vs EBS](#EFS-Vs-EBS) |
 
 # 🛡️ License
 
