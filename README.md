@@ -756,42 +756,43 @@ https://aws-solutions-architect-associate-notes.vercel.app
 - **Performance & Storage Classes**
 
   - EFS Scale
-    • 1000s of concurrent NFS clients, 10 GB+ /s throughput
-    • Grow to Petabyte-scale network file system, automatically
+    - 1000s of concurrent NFS clients, 10 GB+ /s throughput
+    - Grow to Petabyte-scale network file system, automatically
 
   - Performance Mode (set at EFS creation time)
-    • General Purpose (default) – latency-sensitive use cases (web server, CMS, etc...)
-    • Max I/O – higher latency, throughput, highly parallel (big data, media processing)
+    - General Purpose (default) – latency-sensitive use cases (web server, CMS, etc...)
+    - Max I/O – higher latency, throughput, highly parallel (big data, media processing)
 
   - Throughput Mode
-    • Bursting – 1TB = 50MiB/s + burst of up to 100MiB/s
-    • Provisioned – set your throughput regardless of storage size, ex: 1 GiB/s for 1 TB storage
-    • Elastic – automatically scales throughput up or down based on your workloads
-    • Upto3GiB/sforreadsand1GiB/sforwrites
-    • Usedforunpredictableworkloads
+    - Bursting – 1TB = 50MiB/s + burst of up to 100MiB/s
+    - Provisioned – set your throughput regardless of storage size, ex: 1 GiB/s for 1 TB storage
+    - Elastic – automatically scales throughput up or down based on your workloads
+    - Upto3GiB/sforreadsand1GiB/sforwrites
+    - Usedforunpredictableworkloads
 
 - **Storage Classes**
 
   - Storage Tiers (lifecycle management feature – move file after N days)
-    • Standard: for frequently accessed files
-    • Infrequent access (EFS-IA): cost to retrieve files, lower price to store. Enable EFS-IA with a Lifecycle Policy
+    - Standard: for frequently accessed files
+    - Infrequent access (EFS-IA): cost to retrieve files, lower price to store. Enable EFS-IA with a Lifecycle Policy
 
   - Availability and durability
-    • Standard: Multi-AZ, great for prod
-    • One Zone: One AZ, great for dev, backup enabled by default, compatible with IA (EFS One Zone-IA)
+    - Standard: Multi-AZ, great for prod
+    - One Zone: One AZ, great for dev, backup enabled by default, compatible with IA (EFS One Zone-IA)
 
   > Over 90% in cost savings
 
 9. ### EFS Vs EBS
 
 - EBS volumes
-  • one instance (except multi-attach io1/io2)
-  • are locked at the Availability Zone (AZ) level • gp2: IO increases if the disk size increases
-  • gp3 & io1: can increase IO independently
+  - one instance (except multi-attach io1/io2)
+  - are locked at the Availability Zone (AZ) level
+  - gp2: IO increases if the disk size increases
+  - gp3 & io1: can increase IO independently
 - To migrate an EBS volume across AZ
-  • Take a snapshot
-  • Restore the snapshot to another AZ
-  • EBS backups use IO and you shouldn’t run them while your application is handling a lot of traffic
+  - Take a snapshot
+  - Restore the snapshot to another AZ
+  - EBS backups use IO and you shouldn’t run them while your application is handling a lot of traffic
 - Root EBS Volumes of instances get terminated by default if the EC2 instance gets terminated. (you can disable that)
 
 - Mounting 100s of instances across AZ
