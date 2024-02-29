@@ -43,12 +43,13 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 1   | [EBS Overview](#EBS-Overview)                                             |
 | 2   | [EBS Snapshots](#EBS-Snapshots)                                           |
 | 3   | [AMI Overview](#AMI-Overview)                                             |
-| 4   | [EBS Volume Types](#EBS-Volume-Types)                                     |
-| 5   | [EBS Multi-Attach](#EBS-Multi-Attach)                                     |
-| 6   | [EBS Encryption](#EBS-Encryption)                                         |
-| 7   | [Amazon EFS](#Amazon-EFS)                                                 |
-| 8   | [EFS Vs EBS](#EFS-Vs-EBS)                                                 |
-| 9   | [Amazon EFS](#Amazon-EFS)                                                 |
+| 4   | [EC2 Instance Store](#EC2-Instance-Store)                                 |
+| 5   | [EBS Volume Types](#EBS-Volume-Types)                                     |
+| 6   | [EBS Multi-Attach](#EBS-Multi-Attach)                                     |
+| 7   | [EBS Encryption](#EBS-Encryption)                                         |
+| 8   | [Amazon EFS](#Amazon-EFS)                                                 |
+| 9   | [EFS Vs EBS](#EFS-Vs-EBS)                                                 |
+|     | **High Availability & Scalability**                                       |
 
 ## AWS
 
@@ -656,32 +657,150 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
 2. ### EBS Snapshots
 
-  - Make a backup (snapshot) of your EBS volume at a point in time
-  - Not necessary to detach volume to do snapshot, but recommended 
-  - Can copy snapshots across AZ or Region
+- Make a backup (snapshot) of your EBS volume at a point in time
+- Not necessary to detach volume to do snapshot, but recommended
+- Can copy snapshots across AZ or Region
 
-  - **Features**
-    - EBS Snapshot Archive
-      > Move a Snapshot to an "archive tier".
-      > Restoring from the archive takes 24 to 72 hours.
-    - Recycle Bin for EBS Snapshots
-      > To retain deleted snapshots for recovery after accidental deletion
-      > Specify retention (from 1 day to 1 year)
-    - Fast Snapshot Restore (FSR)
-      > Force full initialization of snapshot to have no latency on the first use ($$$)
-
+- **Features**
+  - EBS Snapshot Archive
+    > Move a Snapshot to an "archive tier".
+    > Restoring from the archive takes 24 to 72 hours.
+  - Recycle Bin for EBS Snapshots
+    > To retain deleted snapshots for recovery after accidental deletion
+    > Specify retention (from 1 day to 1 year)
+  - Fast Snapshot Restore (FSR)
+    > Force full initialization of snapshot to have no latency on the first use ($$$)
 
 3. ### AMI Overview
 
-4. ### EBS Volume Types
+- AMI = Amazon Machine Image
+- AMI are a customization of an EC2 instance
+  • You add your own software, configuration, operating system, monitoring...
+  • Faster boot / configuration time because all your software is pre-packaged
+- AMI are built for a **specific region** (and can be copied across regions)
+- You can launch EC2 instances from:
+  • **A Public AMI **: AWS provided
+  • **Your own AMI **: you make and maintain them yourself
+  • **An AWS Marketplace AMI **: an AMI someone else made (and potentially sells)
 
-5. ### EBS Encryption
+- AMI Process (from an EC2 instance)
+  - Start an EC2 instance and customize it
+  - Stop the instance (for data integrity)
+  - Build an AMI – this will also create EBS snapshots
+  - Launch instances from other AMIs
 
-6. ### EBS Amazon EFS
+4. ### EC2 Instance Store
 
-7. ### EFS Vs EBS
+- EBS volumes are network drives with good but “limited” performance
+- _**If you need a high-performance hardware disk, use EC2 Instance Store**_
+- Better I/O performance
+- EC2 Instance Store lose their storage if they’re stopped (ephemeral)
+- Good for buffer / cache / scratch data / temporary content
+- Risk of data loss if hardware fails
+- Backups and Replication are your responsibility
 
-8. ### EFS Vs EBS
+5. ### EBS Volume Types
+
+- EBS Volumes types
+
+  1. - General Purpose SSD (gp3, gp2): General purpose SSD volume that balances price and performance for a wide variety of workloads
+  2. - Provisioned IOPS(Input/Output Operations Per Second) SSD (io2, io1): Highest-performance SSD volume for mission-critical low-latency or high-throughput workloads
+  3. - Throughput Optimized HDD (st1): Low cost HDD volume designed for frequently accessed, throughput- intensive workloads
+  4. - Cold HDD (sc1): Lowest cost HDD volume designed for less frequently accessed workloads
+
+- **Only gp2/gp3 and io1/io2 Block Express can be used as boot volumes**
+
+6. ### EBS Multi-Attach
+
+- Attach the same EBS volume to multiple EC2 instances in the same AZ
+- Each instance has full read & write permissions to the high-performance volume
+- Use case:
+  • Achieve **higher application availability** in clustered Linux applications (ex:Teradata)
+  • Applications must manage concurrent write operations
+- Up to 16 EC2 Instances at a time
+- Must use a file system that’s cluster-aware (not XFS, EXT4, etc...)
+
+7. ### EBS Encryption
+
+- When you create an encrypted EBS volume, you get the following:
+  • Data at rest is encrypted inside the volume
+  • All the data in flight moving between the instance and the volume is encrypted
+  • All snapshots are encrypted
+  • All volumes created from the snapshot
+- Encryption and decryption are handled transparently (you have nothing to do)
+- Encryption has a minimal impact on latency
+- EBS Encryption leverages keys from KMS (AES-256)
+- Copying an unencrypted snapshot allows encryption
+- Snapshots of encrypted volumes are encrypted
+
+- **Encrypt an unencrypted EBS volume**
+  - Create an EBS snapshot of the volume
+  - Encrypt the EBS snapshot (using copy)
+  - Create new ebs volume from the snapshot (the volume will also be encrypted)
+  - Now you can attach the encrypted volume to the original instance
+
+8. ### Amazon EFS
+
+- EFS - Elastic File System
+- Managed NFS (Network File System) that can be mounted on many EC2
+- EFS works with EC2 instances in multi-AZ
+- Highly available, scalable, expensive (3x gp2), pay per use
+- Use cases: content management, web serving, data sharing,Wordpress
+- Uses NFSv4.1 protocol
+- Uses security group to control access to EFS
+- Compatible with Linux based AMI (not Windows)
+- Encryption at rest using KMS
+- POSIX file system (~Linux) that has a standard file API
+- File system scales automatically, pay-per-use, no capacity planning!
+
+- **Performance & Storage Classes**
+
+  - EFS Scale
+    • 1000s of concurrent NFS clients, 10 GB+ /s throughput
+    • Grow to Petabyte-scale network file system, automatically
+
+  - Performance Mode (set at EFS creation time)
+    • General Purpose (default) – latency-sensitive use cases (web server, CMS, etc...)
+    • Max I/O – higher latency, throughput, highly parallel (big data, media processing)
+
+  - Throughput Mode
+    • Bursting – 1TB = 50MiB/s + burst of up to 100MiB/s
+    • Provisioned – set your throughput regardless of storage size, ex: 1 GiB/s for 1 TB storage
+    • Elastic – automatically scales throughput up or down based on your workloads
+    • Upto3GiB/sforreadsand1GiB/sforwrites
+    • Usedforunpredictableworkloads
+
+- **Storage Classes**
+
+  - Storage Tiers (lifecycle management feature – move file after N days)
+    • Standard: for frequently accessed files
+    • Infrequent access (EFS-IA): cost to retrieve files, lower price to store. Enable EFS-IA with a Lifecycle Policy
+
+  - Availability and durability
+    • Standard: Multi-AZ, great for prod
+    • One Zone: One AZ, great for dev, backup enabled by default, compatible with IA (EFS One Zone-IA)
+
+  > Over 90% in cost savings
+
+9. ### EFS Vs EBS
+
+- EBS volumes
+  • one instance (except multi-attach io1/io2)
+  • are locked at the Availability Zone (AZ) level • gp2: IO increases if the disk size increases
+  • gp3 & io1: can increase IO independently
+- To migrate an EBS volume across AZ
+  • Take a snapshot
+  • Restore the snapshot to another AZ
+  • EBS backups use IO and you shouldn’t run them while your application is handling a lot of traffic
+- Root EBS Volumes of instances get terminated by default if the EC2 instance gets terminated. (you can disable that)
+
+- Mounting 100s of instances across AZ
+- EFS share website files (WordPress)
+- Only for Linux Instances (POSIX)
+- EFS has a higher price point than EBS
+- Can leverage EFS-IA for cost savings
+
+======================================================================================================================================
 
 # 🛡️ License
 

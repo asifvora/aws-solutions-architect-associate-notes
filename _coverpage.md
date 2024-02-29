@@ -11,6 +11,7 @@
 - Amazon EC2 – Fundamentals
 - Amazon EC2 – Solutions Architect Associate Level
 - Amazon EC2 – Instance Storage
+- High Availability & Scalability
 
 [GitHub](https://github.com/asif-simform/aws-solutions-architect-associate-notes)
 [Get Started](#aws-solutions-architect-associate-notes)
