@@ -756,10 +756,12 @@ https://aws-solutions-architect-associate-notes.vercel.app
 - **Performance & Storage Classes**
 
   - EFS Scale
+
     - 1000s of concurrent NFS clients, 10 GB+ /s throughput
     - Grow to Petabyte-scale network file system, automatically
 
   - Performance Mode (set at EFS creation time)
+
     - General Purpose (default) – latency-sensitive use cases (web server, CMS, etc...)
     - Max I/O – higher latency, throughput, highly parallel (big data, media processing)
 
@@ -773,6 +775,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
 - **Storage Classes**
 
   - Storage Tiers (lifecycle management feature – move file after N days)
+
     - Standard: for frequently accessed files
     - Infrequent access (EFS-IA): cost to retrieve files, lower price to store. Enable EFS-IA with a Lifecycle Policy
 
