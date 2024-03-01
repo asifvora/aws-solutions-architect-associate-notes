@@ -8,48 +8,60 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
 ### Table of Contents
 
-| No. | Questions                                                                 |
-| --- | ------------------------------------------------------------------------- |
-|     | **AWS**                                                                   |
-| 1   | [What is AWS?](#what-is-AWS)                                              |
-| 2   | [AWS Cloud Use Cases](#AWS-Cloud-Use-Cases)                               |
-| 3   | [Global Services](#Global-Services)                                       |
-| 4   | [Region-scoped Services](#Region-scoped-Services)                         |
-|     | **AWS IAM (AWS Identity and Access Management)**                          |
-| 1   | [What is IAM?](#what-is-IAM)                                              |
-| 2   | [IAM features](#IAM-features)                                             |
-| 3   | [Accessing IAM](#Accessing-IAM)                                           |
-| 4   | [Users & Groups](#Users-&-Groups)                                         |
-| 5   | [Permissions](#Permissions)                                               |
-| 6   | [Roles for Services](#Roles-for-Services)                                 |
-| 7   | [Permissions](#Permissions)                                               |
-| 8   | [Security Tools](#Security-Tools)                                         |
-| 9   | [Guidelines & Best Practices](#Guidelines-&-Best-Practices)               |
-|     | **Amazon EC2 – Fundamentals**                                             |
-| 1   | [What is Amazon EC2?](#what-is-Amazon-EC2)                                |
-| 2   | [EC2 sizing & configuration options](#EC2-sizing-&-configuration-options) |
-| 3   | [EC2 InstanceTypes - Overview](#EC2-InstanceTypes---Overview)             |
-| 4   | [EC2 InstanceTypes - Example](#EC2-InstanceTypes---Example)               |
-| 5   | [Introduction to Security Groups](#Introduction-to-Security-Groups)       |
-| 6   | [Classic Ports](#Classic-Ports)                                           |
-| 7   | [SSH Summary Table](#SSH-Summary-Table)                                   |
-| 8   | [EC2 Instances Purchasing Options](#EC2-Instances-Purchasing-Options)     |
-|     | **Amazon EC2 – Solutions Architect Associate Level**                      |
-| 1   | [Private vs Public IP (IPv4)](<#Private-vs-Public-IP-(IPv4)>)             |
-| 2   | [Placement groups](#Placement-groups)                                     |
-| 3   | [Elastic Network Interfaces (ENI)](<#Elastic-Network-Interfaces-(ENI)>)   |
-| 4   | [EC2 Hibernate](#EC2-Hibernate)                                           |
-|     | **Amazon Amazon EC2 – Instance Storage**                                  |
-| 1   | [EBS Overview](#EBS-Overview)                                             |
-| 2   | [EBS Snapshots](#EBS-Snapshots)                                           |
-| 3   | [AMI Overview](#AMI-Overview)                                             |
-| 4   | [EC2 Instance Store](#EC2-Instance-Store)                                 |
-| 5   | [EBS Volume Types](#EBS-Volume-Types)                                     |
-| 6   | [EBS Multi-Attach](#EBS-Multi-Attach)                                     |
-| 7   | [EBS Encryption](#EBS-Encryption)                                         |
-| 8   | [Amazon EFS](#Amazon-EFS)                                                 |
-| 9   | [EFS Vs EBS](#EFS-Vs-EBS)                                                 |
-|     | **High Availability & Scalability**                                       |
+| No. | Questions                                                                                               |
+| --- | ------------------------------------------------------------------------------------------------------- |
+|     | **AWS**                                                                                                 |
+| 1   | [What is AWS?](#what-is-AWS)                                                                            |
+| 2   | [AWS Cloud Use Cases](#AWS-Cloud-Use-Cases)                                                             |
+| 3   | [Global Services](#Global-Services)                                                                     |
+| 4   | [Region-scoped Services](#Region-scoped-Services)                                                       |
+|     | **AWS IAM (AWS Identity and Access Management)**                                                        |
+| 1   | [What is IAM?](#what-is-IAM)                                                                            |
+| 2   | [IAM features](#IAM-features)                                                                           |
+| 3   | [Accessing IAM](#Accessing-IAM)                                                                         |
+| 4   | [Users & Groups](#Users-&-Groups)                                                                       |
+| 5   | [Permissions](#Permissions)                                                                             |
+| 6   | [Roles for Services](#Roles-for-Services)                                                               |
+| 7   | [Permissions](#Permissions)                                                                             |
+| 8   | [Security Tools](#Security-Tools)                                                                       |
+| 9   | [Guidelines & Best Practices](#Guidelines-&-Best-Practices)                                             |
+|     | **Amazon EC2 – Fundamentals**                                                                           |
+| 1   | [What is Amazon EC2?](#what-is-Amazon-EC2)                                                              |
+| 2   | [EC2 sizing & configuration options](#EC2-sizing-&-configuration-options)                               |
+| 3   | [EC2 InstanceTypes - Overview](#EC2-InstanceTypes---Overview)                                           |
+| 4   | [EC2 InstanceTypes - Example](#EC2-InstanceTypes---Example)                                             |
+| 5   | [Introduction to Security Groups](#Introduction-to-Security-Groups)                                     |
+| 6   | [Classic Ports](#Classic-Ports)                                                                         |
+| 7   | [SSH Summary Table](#SSH-Summary-Table)                                                                 |
+| 8   | [EC2 Instances Purchasing Options](#EC2-Instances-Purchasing-Options)                                   |
+|     | **Amazon EC2 – Solutions Architect Associate Level**                                                    |
+| 1   | [Private vs Public IP (IPv4)](<#Private-vs-Public-IP-(IPv4)>)                                           |
+| 2   | [Placement groups](#Placement-groups)                                                                   |
+| 3   | [Elastic Network Interfaces (ENI)](<#Elastic-Network-Interfaces-(ENI)>)                                 |
+| 4   | [EC2 Hibernate](#EC2-Hibernate)                                                                         |
+|     | **Amazon Amazon EC2 – Instance Storage**                                                                |
+| 1   | [EBS Overview](#EBS-Overview)                                                                           |
+| 2   | [EBS Snapshots](#EBS-Snapshots)                                                                         |
+| 3   | [AMI Overview](#AMI-Overview)                                                                           |
+| 4   | [EC2 Instance Store](#EC2-Instance-Store)                                                               |
+| 5   | [EBS Volume Types](#EBS-Volume-Types)                                                                   |
+| 6   | [EBS Multi-Attach](#EBS-Multi-Attach)                                                                   |
+| 7   | [EBS Encryption](#EBS-Encryption)                                                                       |
+| 8   | [Amazon EFS](#Amazon-EFS)                                                                               |
+| 9   | [EFS Vs EBS](#EFS-Vs-EBS)                                                                               |
+|     | **High Availability & Scalability**                                                                     |
+| 1   | [Scalability & High Availability](#Scalability-&-High-Availability)                                     |
+| 2   | [Elastic Load Balancing (ELB) Overview](<#Elastic-Load-Balancing-(ELB)-Overview>)                       |
+| 3   | [Classic Load Balancers (CLB)](<#Classic-Load-Balancers-(CLB)>)                                         |
+| 4   | [Application Load Balancer (ALB)](<#Application-Load-Balancer-(ALB)>)                                   |
+| 5   | [Network Load Balancer (NLB)](<#Network-Load-Balancer-(NLB)>)                                           |
+| 6   | [Gateway Load Balancer (GWLB)](<#Gateway-Load-Balancer-(GWLB)>)                                         |
+| 7   | [Elastic Load Balancer - Sticky Sessions](#Elastic-Load-Balancer---Sticky-Sessions)                     |
+| 8   | [Elastic Load Balancer - Cross Zone Load Balancing](#Elastic-Load-Balancer---Cross-Zone-Load-Balancing) |
+| 9   | [Elastic Load Balancer - SSL Certificates](#Elastic-Load-Balancer---SSL-Certificates)                   |
+| 10  | [Elastic Load Balancer - Connection Draining](#Elastic-Load-Balancer---Connection-Draining)             |
+| 11  | [Auto Scaling Groups (ASG) Overview](<#Auto-Scaling-Groups-(ASG)-Overview>)                             |
+| 12  | [Auto Scaling Groups - Scaling Policies](#Auto-Scaling-Groups---Scaling-Policies)                       |
 
 ## AWS
 
@@ -675,13 +687,14 @@ https://aws-solutions-architect-associate-notes.vercel.app
 
 - AMI = Amazon Machine Image
 - AMI are a customization of an EC2 instance
-  • You add your own software, configuration, operating system, monitoring...
-  • Faster boot / configuration time because all your software is pre-packaged
+  - You add your own software, configuration, operating system, monitoring...
+  - Faster boot / configuration time because all your software is pre-packaged
 - AMI are built for a **specific region** (and can be copied across regions)
 - You can launch EC2 instances from:
-  • **A Public AMI **: AWS provided
-  • **Your own AMI **: you make and maintain them yourself
-  • **An AWS Marketplace AMI **: an AMI someone else made (and potentially sells)
+
+  - **A Public AMI **: AWS provided
+  - **Your own AMI **: you make and maintain them yourself
+  - **An AWS Marketplace AMI **: an AMI someone else made (and potentially sells)
 
 - AMI Process (from an EC2 instance)
   - Start an EC2 instance and customize it
@@ -715,18 +728,18 @@ https://aws-solutions-architect-associate-notes.vercel.app
 - Attach the same EBS volume to multiple EC2 instances in the same AZ
 - Each instance has full read & write permissions to the high-performance volume
 - Use case:
-  • Achieve **higher application availability** in clustered Linux applications (ex:Teradata)
-  • Applications must manage concurrent write operations
+  - Achieve **higher application availability** in clustered Linux applications (ex:Teradata)
+  - Applications must manage concurrent write operations
 - Up to 16 EC2 Instances at a time
 - Must use a file system that’s cluster-aware (not XFS, EXT4, etc...)
 
 7. ### EBS Encryption
 
 - When you create an encrypted EBS volume, you get the following:
-  • Data at rest is encrypted inside the volume
-  • All the data in flight moving between the instance and the volume is encrypted
-  • All snapshots are encrypted
-  • All volumes created from the snapshot
+  - Data at rest is encrypted inside the volume
+  - All the data in flight moving between the instance and the volume is encrypted
+  - All snapshots are encrypted
+  - All volumes created from the snapshot
 - Encryption and decryption are handled transparently (you have nothing to do)
 - Encryption has a minimal impact on latency
 - EBS Encryption leverages keys from KMS (AES-256)
@@ -803,6 +816,143 @@ https://aws-solutions-architect-associate-notes.vercel.app
 - Only for Linux Instances (POSIX)
 - EFS has a higher price point than EBS
 - Can leverage EFS-IA for cost savings
+
+## High Availability & Scalability
+
+1. ### Scalability & High Availability
+
+- Scalability means that an application / system can handle greater loads by adapting.
+- There are two kinds of scalability:
+  - Vertical Scalability
+  - Horizontal Scalability (= elasticity)
+- Scalability is linked but different to High Availability
+
+- **Vertical Scalability**
+
+  - Vertically scalability means increasing the size of the instance
+  - For example, your application runs on a t2.micro
+  - Scaling that application vertically means running it on a t2.large
+  - Vertical scalability is very common for non distributed systems, such as a database.
+  - RDS, ElastiCache are services that can scale ver tically.
+  - There’s usually a limit to how much you can vertically scale (hardware limit)
+
+- **Horizontal Scalability**
+
+  - Horizontal Scalability means increasing the number of instances / systems for your application
+  - Horizontal scaling implies distributed systems.
+  - This is very common for web applications / modern applications
+
+- **High Availability**
+
+  - High Availability usually goes hand in hand with horizontal scaling
+  - High availability means running your application / system in at least 2 data centers (== Availability Zones)
+  - The goal of high availability is to survive a data center loss
+  - The high availability can be passive (for RDS Multi AZ for example)
+  - The high availability can be active (for horizontal scaling)
+
+- **High Availability & Scalability For EC2**
+- Vertical Scaling: Increase instance size (= scale up / down)
+  - From: t2.nano - 0.5G of RAM, 1 vCPU
+  - To: u-12tb1.metal – 12.3 TB of RAM, 448 vCPUs
+- Horizontal Scaling: Increase number of instances (= scale out / in)
+  - Auto Scaling Group
+  - Load Balancer
+- High Availability: Run instances for the same application across multi AZ
+  - Auto Scaling Group multi AZ
+  - Load Balancer multi AZ
+
+2. ### Elastic Load Balancing (ELB) Overview
+
+- Load Balances are servers that forward traffic to multiple servers (e.g., EC2 instances) downstream
+- **Why use a load balancer?**
+  - Spread load across multiple downstream instances
+  - Expose a single point of access (DNS) to your application
+  - Seamlessly handle failures of downstream instances
+  - Do regular health checks to your instances
+  - Provide SSL termination (HTTPS) for your websites
+  - Enforce stickiness with cookies
+  - High availability across zones
+  - Separate public traffic from private traffic
+- **Why use an Elastic Load Balancer?**
+  - An Elastic Load Balancer is a managed load balancer
+    - AWS guarantees that it will be working
+    - AWS takes care of upgrades, maintenance, high availability
+    - AWS provides only a few configuration knobs
+  - It costs less to setup your own load balancer but it will be a lot more effort on your end
+  - It is integrated with many AWS offerings / services
+    - EC2, EC2 Auto Scaling Groups, Amazon ECS
+    - AWS Certificate Manager (ACM), CloudWatch
+    - Route53,AWSWAF,AWSGlobalAccelerator
+- **Health Checks**
+  - Health Checks are crucial for Load Balancers
+  - They enable the load balancer to know if instances it forwards traffic to are available to reply to requests
+  - The health check is done on a port and a route (/health is common)
+  - If the response is not 200 (OK), then the instance is unhealthy
+- **Types of load balancer on AWS**
+  - 1.  **Classic Load Balancer** (v1 - old generation) – 2009 – CLB - HTTP, HTTPS,TCP,SSL(secureTCP)
+  - 2.  **Application Load Balancer** (v2 - new generation) – 2016 – ALB - HTTP, HTTPS,WebSocket
+  - 3.  **Network Load Balancer** (v2 - new generation) – 2017 – NLB - TCP,TLS(secureTCP),UDP
+  - 4.  **Gateway Load Balancer** – 2020 – GWLB - Operates at layer 3 (Network layer) – IP Protocol
+
+> Overall, it is recommended to use the newer generation load balancers as they provide more features
+> Some load balancers can be setup as internal (private) or external (public) ELBs
+
+3. ### Classic Load Balancers (CLB)
+
+- Suppor HTTP, HTTPS, TCP, SSL
+- Health checks are TCP or HTTP based
+- Protocols port supported are 1-65535
+- It's support IPv4, IPv6 and dual stack
+- Fixed hostname XXX.region.elb.amazonaws.com
+
+4. ### Application Load Balancer (ALB)
+
+- Application load balancers is Layer 7 (HTTP)
+- Distributes incoming application traffic across multiple targest such as EC2 instances in multiple AZ.
+- Increase the availability of your application
+- Suppor t for HTTP/2 and WebSocket
+- Support redirects (from HTTP to HTTPS for example)
+- Routing tables to different target groups:
+  - Routing based on path in URL (example.com/users & example.com/posts)
+  - Routing based on hostname in URL (one.example.com & other.example.com)
+  - Routing based on Query String, Headers (example.com/users?id=123&order=false)
+- ALB are a great fit for micro services & container-based application (example: Docker & Amazon ECS)
+- Has a port mapping feature to redirect to a dynamic port in ECS
+- Target Groups:
+  - EC2 instances (can be managed by an Auto Scaling Group) – HTTP
+  - ECS tasks (managed by ECS itself) – HTTP
+  - Lambda functions – HTTP request is translated into a JSON event
+  - IP Addresses – must be private IPs
+  - ALB can route to multiple target groups
+  - Health checks are at the target group level
+- Fixed hostname XXX.region.elb.amazonaws.com
+- The application servers don’t see the IP of the client directly
+  - The true IP of the client is inserted in the header **X-Forwarded-For**
+  - We can also get Port (X-Forwarded-Port) and proto (X-Forwarded-Proto)
+
+5. ### Network Load Balancer (NLB)
+
+- Network load balancers (Layer 4) allow to:
+  - Forward TCP & UDP traffic to your instances
+  - Handle millions of request per seconds
+  - Less latency ~100 ms (vs 400 ms for ALB)
+- NLB has one static IP per AZ, and supports assigning Elastic IP (helpful for whitelisting specific IP)
+- Used for extreme performance,TCP or UDP traffic
+- Not included in the AWS free tier
+- Target Groups:
+  - EC2 instances
+  - IP Addresses – must be private IPs
+  - Application Load Balancer
+  - Health Checks support the TCP, HTTP and HTTPS Protocols
+
+6. ### Gateway Load Balancer (GWLB)
+
+7. ### Elastic Load Balancer - Sticky Sessions
+8. ### Elastic Load Balancer - Cross Zone Load Balancing
+9. ### Elastic Load Balancer - SSL Certificates
+10. ### Elastic Load Balancer - Connection Draining
+11. ### Auto Scaling Groups (ASG) Overview
+12. ### Auto Scaling Groups - Scaling Policies
 
 ======================================================================================================================================
 
