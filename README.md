@@ -1045,6 +1045,9 @@ https://aws-solutions-architect-associate-notes.vercel.app
 - Set to a low value if your requests are short
 
 11. ### Auto Scaling Groups (ASG) Overview
+
+- In real-life, the load on your websites and application can change
+
 12. ### Auto Scaling Groups - Scaling Policies
 
 ======================================================================================================================================
