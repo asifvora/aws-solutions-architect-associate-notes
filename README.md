@@ -62,6 +62,8 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 10  | [Elastic Load Balancer - Connection Draining](#Elastic-Load-Balancer---Connection-Draining)             |
 | 11  | [Auto Scaling Groups (ASG) Overview](<#Auto-Scaling-Groups-(ASG)-Overview>)                             |
 | 12  | [Auto Scaling Groups - Scaling Policies](#Auto-Scaling-Groups---Scaling-Policies)                       |
+|     | **AWS Fundamentals: RDS + Aurora + ElastiCache**                                                        |
+| 1   | [Amazon RDS Overview](#Amazon-RDS-Overview)                                                             |
 
 ## AWS
 
@@ -1139,6 +1141,46 @@ https://aws-solutions-architect-associate-notes.vercel.app
   - Can only be done from the CLI (Not AWS console)
   - You can merge multiple, Single AZ, Autoscalling group into a singe, One Multi-AZ auto scalling group
 
+## AWS Fundamentals: RDS + Aurora + ElastiCache
+
+1. ### Amazon RDS Overview
+
+- RDS stands for Relational Database Service
+- It’s a managed DB service for DB use SQL as a query language.
+- It allows you to create databases in the cloud that are managed by AWS
+
+  - Postgres
+  - MySQL
+  - MariaDB
+  - Oracle
+  - Microsoft SQL Server
+  - Aurora (AWS Proprietary database)
+
+- Advantage over using RDS versus deploying DB on EC2
+
+  - RDS is a managed service:
+    - Automated provisioning, OS patching
+    - Continuous backups and restore to specific timestamp (Point in Time Restore)!
+    - Monitoring dashboards
+    - Read replicas for improved read performance
+    - Multi AZ setup for DR (Disaster Recovery)
+    - Maintenance windows for upgrades
+    - Scaling capability (vertical and horizontal)
+    - Storage backed by EBS (gp2 or io1)
+  - BUT you can’t SSH into your instances
+
+- RDS – Storage Auto Scaling
+  - Helps you increase storage on your RDS DB instance dynamically
+  - When RDS detects you are running out of free database storage, it scales automatically
+  - Avoid manually scaling your database storage
+  - You have to set Maximum Storage Threshold (maximum limit for DB storage)
+  - Automatically modify storage if:
+    - Free storage is less than 10% of allocated storage
+    - Low-storage lasts at least 5 minutes
+    - 6 hours have passed since last modification
+  - Useful for applications with unpredictable workloads
+  - Supports all RDS database engines (MariaDB, MySQL, PostgreSQL, SQL Server, Oracle)
+
 ======================================================================================================================================
 
 # 🛡️ License
@@ -1156,7 +1198,7 @@ This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) fi
 
 # 🍰 Contributing
 
-- Please contribute using [GitHub Flow](https://guides.github.com/introduction/flow). Create a branch, add commits, and [open a pull request](https://github.com/asif-simform/MERN-Stack/compare).
+- Please contribute using [GitHub Flow](https://guides.github.com/introduction/flow). Create a branch, add commits, and [open a pull request](https://github.com/asifvora/MERN-Stack/compare).
 
 - Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details.
 

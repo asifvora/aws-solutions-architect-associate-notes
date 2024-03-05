@@ -12,6 +12,7 @@
 - Amazon EC2 – Solutions Architect Associate Level
 - Amazon EC2 – Instance Storage
 - High Availability & Scalability
+- AWS Fundamentals: RDS + Aurora + ElastiCache
 
-[GitHub](https://github.com/asif-simform/aws-solutions-architect-associate-notes)
+[GitHub](https://github.com/asifvora/aws-solutions-architect-associate-notes)
 [Get Started](#aws-solutions-architect-associate-notes)
