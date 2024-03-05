@@ -62,6 +62,8 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 10  | [Elastic Load Balancer - Connection Draining](#Elastic-Load-Balancer---Connection-Draining)             |
 | 11  | [Auto Scaling Groups (ASG) Overview](<#Auto-Scaling-Groups-(ASG)-Overview>)                             |
 | 12  | [Auto Scaling Groups - Scaling Policies](#Auto-Scaling-Groups---Scaling-Policies)                       |
+|     | **AWS Fundamentals: RDS + Aurora + ElastiCache**                                                        |
+| 1   | [Amazon RDS Overview](#Amazon-RDS-Overview)                                                             |
 
 ## AWS
 
@@ -1047,8 +1049,137 @@ https://aws-solutions-architect-associate-notes.vercel.app
 11. ### Auto Scaling Groups (ASG) Overview
 
 - In real-life, the load on your websites and application can change
+- The goal of an Auto Scaling Group (ASG) is to:
+  - Scale out (add EC2 instances) to match an increased load
+  - Scale in (remove EC2 instances) to match a decreased load
+  - Ensure we have a minimum and a maximum number of EC2 instances running
+  - Automatically register new instances to a load balancer
+  - Re-create an EC2 instance in case a previous one is terminated (ex: if unhealthy)
+- ASG are free (you only pay for the underlying EC2 instances)
+- Auto Scaling Group Attributes:
+  - AMI + InstanceType
+  - EC2 User Data
+  - EBSVolumes
+  - Security Groups
+  - SSH Key Pair
+  - IAM Roles for your EC2 Instances
+  - Network + Subnets Information
+  - Load Balancer Information
+- Min Size / Max Size / Initial Capacity
+
+- Auto Scaling - CloudWatch Alarms & Scaling:
+
+  - It is possible to scale an ASG based on CloudWatch alarms
+  - An alarm monitors a metric (such as Average CPU, or a custom metric)
+  - Metrics such as Average CPU are computed for the overall ASG instances
+  - Based on the alarm:
+    - We can create scale-out policies (increase the number of instances)
+    - We can create scale-in policies (decrease the number of instances)
+
+- Balance equal auto scaling in all AZ
+
+- In four situation ASG sends a SND email notification
+
+  - An instance is launched
+  - An instance is terminated
+  - An instance fails to launched
+  - An instance fails to terminated
+
+- Standby state:
+  - You Can Manually move move an instance from an ASG and put it in Standby State.
+  - Instances in Standby State are still managed by Autoscaling
+  - Instances in Standby state are Charged as Normal in-Service instances.
+  - They do not Count towards available EC2 instances for Workload / App Use.
+  - Autoscaling does not health Check on instances in standby state.
 
 12. ### Auto Scaling Groups - Scaling Policies
+
+- Dynamic Scaling
+
+  - 1. Target Tracking Scaling
+    - Simple to set-up
+    - Example: I want the average ASG CPU to stay at around 40%
+  - 2. Simple Scaling
+
+    - When a CloudWatch alarm is triggered (example CPU > 70%), then add 2 units
+    - When a CloudWatch alarm is triggered (example CPU < 30%), then remove 1
+      - Scaling Cooldowns period:
+        - After a scaling activity happens, you are in the cooldown period (default 300 seconds)
+        - During the cooldown period, the ASG will not launch or terminate additional instances (to allow for metrics to stabilize)
+        - Advice: Use a ready-to-use AMI to reduce configuration time in order to be serving request fasters and reduce the cooldown period
+      - Scaling Warmup period
+        - Allows you to control the time until a newly launched instance can contribute to the CloudWatch metrics
+        - Wait for starta and distrubute the load
+
+  - 3. Step Scaling
+    - scales capacity using a set of adjustments, known as step adjustments
+    - Example:
+      - Scale out by 10 instances if the alarm metric reaches 60 percent
+      - Scale out by 30 instances if the alarm metric reaches 75 percent
+      - Scale out by 40 instances if the alarm metric reaches 85 percent
+    - Does not support/wait for a cool-down time
+
+- Scheduled Scaling
+
+  - Anticipate a scaling based on known usage patterns
+  - Example: increase the min capacity to 10 at 5 pm on Fridays
+  - A schedule action must have a unique data/time you cannit config two schedule activities a the same time/date.
+
+- Predictive scaling
+
+  - Continuously forecast load and schedule scaling ahead
+  - Set Min and Max limit
+
+- Good metrics to scale on:
+
+  - **CPUUtilization:** Average CPU utilization across your instances
+  - **RequestCountPerTarget:** to make sure the number of requests per EC2 instances is stable
+  - **Average Network In / Out** (if you’re application is network bound)
+  - **Any custom metric** (that you push using CloudWatch)
+
+- Merging Auto Scaling group
+  - Can only be done from the CLI (Not AWS console)
+  - You can merge multiple, Single AZ, Autoscalling group into a singe, One Multi-AZ auto scalling group
+
+## AWS Fundamentals: RDS + Aurora + ElastiCache
+
+1. ### Amazon RDS Overview
+
+- RDS stands for Relational Database Service
+- It’s a managed DB service for DB use SQL as a query language.
+- It allows you to create databases in the cloud that are managed by AWS
+
+  - Postgres
+  - MySQL
+  - MariaDB
+  - Oracle
+  - Microsoft SQL Server
+  - Aurora (AWS Proprietary database)
+
+- Advantage over using RDS versus deploying DB on EC2
+
+  - RDS is a managed service:
+    - Automated provisioning, OS patching
+    - Continuous backups and restore to specific timestamp (Point in Time Restore)!
+    - Monitoring dashboards
+    - Read replicas for improved read performance
+    - Multi AZ setup for DR (Disaster Recovery)
+    - Maintenance windows for upgrades
+    - Scaling capability (vertical and horizontal)
+    - Storage backed by EBS (gp2 or io1)
+  - BUT you can’t SSH into your instances
+
+- RDS – Storage Auto Scaling
+  - Helps you increase storage on your RDS DB instance dynamically
+  - When RDS detects you are running out of free database storage, it scales automatically
+  - Avoid manually scaling your database storage
+  - You have to set Maximum Storage Threshold (maximum limit for DB storage)
+  - Automatically modify storage if:
+    - Free storage is less than 10% of allocated storage
+    - Low-storage lasts at least 5 minutes
+    - 6 hours have passed since last modification
+  - Useful for applications with unpredictable workloads
+  - Supports all RDS database engines (MariaDB, MySQL, PostgreSQL, SQL Server, Oracle)
 
 ======================================================================================================================================
 
@@ -1067,7 +1198,7 @@ This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) fi
 
 # 🍰 Contributing
 
-- Please contribute using [GitHub Flow](https://guides.github.com/introduction/flow). Create a branch, add commits, and [open a pull request](https://github.com/asif-simform/MERN-Stack/compare).
+- Please contribute using [GitHub Flow](https://guides.github.com/introduction/flow). Create a branch, add commits, and [open a pull request](https://github.com/asifvora/MERN-Stack/compare).
 
 - Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details.
 
