@@ -64,6 +64,10 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 12  | [Auto Scaling Groups - Scaling Policies](#Auto-Scaling-Groups---Scaling-Policies)                       |
 |     | **AWS Fundamentals: RDS + Aurora + ElastiCache**                                                        |
 | 1   | [Amazon RDS Overview](#Amazon-RDS-Overview)                                                             |
+| 2   | [RDS Read Replicas Vs Multi AZ](#RDS-Read-Replicas-Vs-Multi-AZ)                                         |
+| 3   | [RDS Custom](#RDS-Custom)                                                                               |
+| 4   | [Amazon Aurora](#Amazon-Aurora)                                                                         |
+| 5   | [Amazon Aurora - Advanced Concepts](#Amazon-Aurora-Advanced-Concepts)                                   |
 
 ## AWS
 
@@ -1181,7 +1185,99 @@ https://aws-solutions-architect-associate-notes.vercel.app
   - Useful for applications with unpredictable workloads
   - Supports all RDS database engines (MariaDB, MySQL, PostgreSQL, SQL Server, Oracle)
 
-======================================================================================================================================
+2. ### RDS Read Replicas Vs Multi AZ
+
+- Up to 15 Read Replicas
+- Within AZ, Cross AZ or Cross Region
+- Replication is ASYNC, so reads are eventually consistent
+- Replicas can be promoted to their own DB
+- Applications must update the connection ASYNC replication ASYNC replication string to leverage read replicas
+
+- RDS Read Replicas – Use Cases:
+
+  - You have a production database that is taking on normal load
+  - You want to run a reporting application to run some analytics
+  - You create a Read Replica to run the new workload there
+  - The production application is unaffected
+  - Read replicas are used for SELECT (=read) only kind of statements (not INSERT, UPDATE, DELETE)
+
+- RDS Read Replicas – Network Cost:
+
+  - In AWS there’s a network cost when data goes from one AZ to another
+  - For RDS Read Replicas within the same region, you don’t pay that fee
+
+- RDS Multi AZ (Disaster Recovery)
+
+  - SYNC replication
+  - One DNS name – automatic app failover to standby
+  - Increase availability
+  - Failover in case of loss of AZ, loss of network, instance or storage failure
+  - No manual intervention in apps
+  - Not used for scaling
+    > Note:The Read Replicas be setup as Multi AZ for Disaster Recovery (DR)
+
+- RDS – From Single-AZ to Multi-AZ
+  - Zero downtime operation (no need to stop the DB)
+  - Just click on “modify” for the database
+  - The following happens internally:
+    - A snapshot is taken
+    - A new DB is restored from the snapshot in a new AZ
+    - Synchronization is established between the two databases
+
+3. ### RDS Custom
+
+- Managed Oracle and Microsoft SQL Server Database with OS and database customization
+- RDS: Automates setup, operation, and scaling of database in AWS
+- Custom: access to the underlying database and OS so you can
+  - Configure settings
+  - Install patches
+  - Enable native features
+  - Access the underlying EC2 Instance using SSH or SSM Session Manager
+- De-activate Automation Mode to perform your customization, better to take a DB snapshot before
+- RDS vs. RDS Custom:
+  - RDS: entire database and the OS to be managed by AWS
+  - RDS Custom: full admin access to the underlying OS and the database
+
+4. ### Amazon Aurora
+
+- Aurora is a proprietary technology from AWS (not open sourced)
+- Postgres and MySQL are both supported as Aurora DB (that means your drivers will work as if Aurora was a Postgres or MySQL database)
+- Aurora is “AWS cloud optimized” and claims 5x performance improvement over MySQL on RDS, over 3x the performance of Postgres on RDS
+- Aurora storage automatically grows in increments of 10GB, up to 128 TB.
+- Aurora can have up to 15 replicas and the replication process is faster thanMySQL (sub 10 ms replica lag)
+- Failover in Aurora is instantaneous. It’s HA (High Availability) native.
+- Aurora costs more than RDS (20% more) – but is more efficient
+
+- Aurora High Availability and Read Scaling:
+
+  - 6 copies of your data across 3 AZ:
+    - 4 copies out of 6 needed for writes
+    - 3 copies out of 6 need for reads
+    - Self healing with peer-to-peer replication
+    - Storage is striped across 100s of volumes
+  - One Aurora Instance takes writes (master)
+  - Automated failover for master in less than 30 seconds
+  - Master + up to 15 Aurora Read Replicas serve reads
+  - Support for Cross Region Replication
+
+- Features of Aurora:
+  - Automatic fail-over
+  - Backup and Recovery
+  - Isolation and security
+  - Industry compliance
+  - Push-button scaling
+  - Automated Patching with Zero Downtime
+  - Advanced Monitoring
+  - Routine Maintenance
+  - Backtrack: restore data at any point of time without using backups
+
+5. ### Amazon Aurora Advanced Concepts
+
+---
+
+---
+
+---
 
 # 🛡️ License
 
