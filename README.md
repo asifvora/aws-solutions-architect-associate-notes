@@ -80,9 +80,8 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 3   | [Route 53 - TTL](#Route-53---TTL)                                                                       |
 | 4   | [Route 53 CNAME vs Alias](#Route-53-CNAME-vs-Alias)                                                     |
 | 5   | [Route 53 – Routing Policies](#Route-53-–-Routing-Policies)                                             |
-| 6   | [Route 53 – Health Checks](#Route 53-–-Health Checks)                                                   |
-| 7   | [Domain Registar vs. DNS Service](#Domain-Registar-vs.-DNS-Service)                                                                                                   |
-
+| 6   | [Route 53 – Health Checks](#Route-53-–-Health-Checks)                                                   |
+| 7   | [Domain Registar vs. DNS Service](#Domain-Registar-vs.-DNS-Service)                                     |
 
 ## AWS
 
@@ -1670,12 +1669,12 @@ https://aws-solutions-architect-associate-notes.vercel.app
   - They can’t access private endpoints (private VPC or on-premises resource)
   - You can create a CloudWatch Metric and associate a CloudWatch Alarm, then create a Health Check that checks the alarm itself
 
-
 ### 7. Domain Registar vs. DNS Service
-  - You buy or register your domain name with a Domain Registrar typically by paying annual charges (e.g., GoDaddy, Amazon Registrar Inc., ...)
-  - The Domain Registrar usually provides you with a DNS service to manage your DNS records
-  - But you can use another DNS service to manage your DNS records
-  - Example: purchase the domain from GoDaddy and use Route 53 to manage your DNS records
+
+- You buy or register your domain name with a Domain Registrar typically by paying annual charges (e.g., GoDaddy, Amazon Registrar Inc., ...)
+- The Domain Registrar usually provides you with a DNS service to manage your DNS records
+- But you can use another DNS service to manage your DNS records
+- Example: purchase the domain from GoDaddy and use Route 53 to manage your DNS records
 
 - 3rd Party Registrar with Amazon Route 53
   - If you buy your domain on a 3rd par ty registrar, you can still use Route 53 as the DNS Service provider
@@ -1683,6 +1682,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
     - 2. Update NS Records on 3rd party website to use Route 53 Name Servers
   - Domain Registrar != DNS Service
   - But every Domain Registrar usually comes with some DNS features
+
 ---
 
 # 🛡️ License
