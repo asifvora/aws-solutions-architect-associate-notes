@@ -13,6 +13,7 @@
 - Amazon EC2 – Instance Storage
 - High Availability & Scalability
 - AWS Fundamentals: RDS + Aurora + ElastiCache
+- Amazon Route 53
 
 [GitHub](https://github.com/asifvora/aws-solutions-architect-associate-notes)
 [Get Started](#aws-solutions-architect-associate-notes)

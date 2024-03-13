@@ -64,6 +64,25 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 12  | [Auto Scaling Groups - Scaling Policies](#Auto-Scaling-Groups---Scaling-Policies)                       |
 |     | **AWS Fundamentals: RDS + Aurora + ElastiCache**                                                        |
 | 1   | [Amazon RDS Overview](#Amazon-RDS-Overview)                                                             |
+| 2   | [RDS Read Replicas Vs Multi AZ](#RDS-Read-Replicas-Vs-Multi-AZ)                                         |
+| 3   | [RDS Custom](#RDS-Custom)                                                                               |
+| 4   | [Amazon Aurora](#Amazon-Aurora)                                                                         |
+| 5   | [Amazon Aurora - Advanced Concepts](#Amazon-Aurora-Advanced-Concepts)                                   |
+| 6   | [RDS & Aurora - Backup and Monitoring](#RDS-&-Aurora---Backup-and-Monitoring)                           |
+| 7   | [RDS & Aurora Security](#RDS-&-Aurora-Security)                                                         |
+| 8   | [Amazon RDS Proxy](#Amazon-RDS-Proxy)                                                                   |
+| 9   | [Amazon ElastiCache Overview](#Amazon-ElastiCache-Overview)                                             |
+| 10  | [ElastiCache for Solution Architects](#ElastiCache-for-Solution-Architects)                             |
+| 11  | [List of Ports to be familiar](#List-of-Ports-to-be-familiar)                                           |
+|     | **Amazon Route 53**                                                                                     |
+| 1   | [What is DNS?](#What-is-DNS?)                                                                           |
+| 2   | [Route 53 Overview](#Route-53-Overview)                                                                 |
+| 3   | [Route 53 - TTL](#Route-53---TTL)                                                                       |
+| 4   | [Route 53 CNAME vs Alias](#Route-53-CNAME-vs-Alias)                                                     |
+| 5   | [Route 53 – Routing Policies](#Route-53-–-Routing-Policies)                                             |
+| 6   | [Route 53 – Health Checks](#Route 53-–-Health Checks)                                                   |
+| 7   | [Domain Registar vs. DNS Service](#Domain-Registar-vs.-DNS-Service)                                                                                                   |
+
 
 ## AWS
 
@@ -1181,7 +1200,490 @@ https://aws-solutions-architect-associate-notes.vercel.app
   - Useful for applications with unpredictable workloads
   - Supports all RDS database engines (MariaDB, MySQL, PostgreSQL, SQL Server, Oracle)
 
-======================================================================================================================================
+2. ### RDS Read Replicas Vs Multi AZ
+
+- Up to 15 Read Replicas
+- Within AZ, Cross AZ or Cross Region
+- Replication is ASYNC, so reads are eventually consistent
+- Replicas can be promoted to their own DB
+- Applications must update the connection ASYNC replication ASYNC replication string to leverage read replicas
+
+- RDS Read Replicas – Use Cases:
+
+  - You have a production database that is taking on normal load
+  - You want to run a reporting application to run some analytics
+  - You create a Read Replica to run the new workload there
+  - The production application is unaffected
+  - Read replicas are used for SELECT (=read) only kind of statements (not INSERT, UPDATE, DELETE)
+
+- RDS Read Replicas – Network Cost:
+
+  - In AWS there’s a network cost when data goes from one AZ to another
+  - For RDS Read Replicas within the same region, you don’t pay that fee
+
+- RDS Multi AZ (Disaster Recovery)
+
+  - SYNC replication
+  - One DNS name – automatic app failover to standby
+  - Increase availability
+  - Failover in case of loss of AZ, loss of network, instance or storage failure
+  - No manual intervention in apps
+  - Not used for scaling
+    > Note:The Read Replicas be setup as Multi AZ for Disaster Recovery (DR)
+
+- RDS – From Single-AZ to Multi-AZ
+  - Zero downtime operation (no need to stop the DB)
+  - Just click on “modify” for the database
+  - The following happens internally:
+    - A snapshot is taken
+    - A new DB is restored from the snapshot in a new AZ
+    - Synchronization is established between the two databases
+
+3. ### RDS Custom
+
+- Managed Oracle and Microsoft SQL Server Database with OS and database customization
+- RDS: Automates setup, operation, and scaling of database in AWS
+- Custom: access to the underlying database and OS so you can
+  - Configure settings
+  - Install patches
+  - Enable native features
+  - Access the underlying EC2 Instance using SSH or SSM Session Manager
+- De-activate Automation Mode to perform your customization, better to take a DB snapshot before
+- RDS vs. RDS Custom:
+  - RDS: entire database and the OS to be managed by AWS
+  - RDS Custom: full admin access to the underlying OS and the database
+
+4. ### Amazon Aurora
+
+- Aurora is a proprietary technology from AWS (not open sourced)
+- Postgres and MySQL are both supported as Aurora DB (that means your drivers will work as if Aurora was a Postgres or MySQL database)
+- Aurora is “AWS cloud optimized” and claims 5x performance improvement over MySQL on RDS, over 3x the performance of Postgres on RDS
+- Aurora storage automatically grows in increments of 10GB, up to 128 TB.
+- Aurora can have up to 15 replicas and the replication process is faster thanMySQL (sub 10 ms replica lag)
+- Failover in Aurora is instantaneous. It’s HA (High Availability) native.
+- Aurora costs more than RDS (20% more) – but is more efficient
+
+- Aurora High Availability and Read Scaling:
+
+  - 6 copies of your data across 3 AZ:
+    - 4 copies out of 6 needed for writes
+    - 3 copies out of 6 need for reads
+    - Self healing with peer-to-peer replication
+    - Storage is striped across 100s of volumes
+  - One Aurora Instance takes writes (master)
+  - Automated failover for master in less than 30 seconds
+  - Master + up to 15 Aurora Read Replicas serve reads
+  - Support for Cross Region Replication
+
+- Features of Aurora:
+  - Automatic fail-over
+  - Backup and Recovery
+  - Isolation and security
+  - Industry compliance
+  - Push-button scaling
+  - Automated Patching with Zero Downtime
+  - Advanced Monitoring
+  - Routine Maintenance
+  - Backtrack: restore data at any point of time without using backups
+
+5. ### Amazon Aurora Advanced Concepts
+
+- Aurora Replicas - Auto Scaling
+- Aurora – Custom Endpoints
+  - Define a subset of Aurora Instances as a Custom Endpoint
+  - Example: Run analytical queries on specific replicas
+  - The Reader Endpoint is generally not used after defining Custom Endpoints
+- Aurora Serverless
+  - Automated database instantiation and auto- scaling based on actual usage
+  - Good for infrequent, intermittent or unpredictable workloads
+  - No capacity planning needed
+  - Pay per second, can be more cost-effective
+- Global Aurora
+  - Aurora Cross Region Read Replicas:
+    - Useful for disaster recovery
+    - Simple to put in place
+  - Aurora Global Database (recommended):
+    - 1 Primary Region (read / write)
+    - Up to 5 secondary (read-only) regions, replication lag is less than 1 second
+    - Up to 16 Read Replicas per secondary region
+    - Helps for decreasing latency
+    - Promoting another region (for disaster recovery) has an RTO of < 1 minute
+    - Typical cross-region replication takes less than 1 second
+- Aurora Machine Learning
+  - Enables you to add ML-based predictions to your applications via SQL
+  - Simple, optimized, and secure integration between Aurora and AWS ML services
+  - Supported services
+    - Amazon SageMaker (use with any ML model)
+    - Amazon Comprehend (for sentiment analysis)
+  - You don’t need to have ML experience
+  - Use cases: fraud detection, ads targeting, sentiment analysis, product recommendations
+
+6. ### RDS & Aurora - Backup and Monitoring
+
+- RDS Backups
+
+  - Automated backups:
+    - Daily full backup of the database (during the backup window)
+    - Transaction logs are backed-up by RDS every 5 minutes
+    - Ability to restore to any point in time (from oldest backup to 5 minutes ago)
+    - 1 to 35 days of retention, set 0 to disable automated backups
+  - Manual DB Snapshots
+    - Manually triggered by the user
+    - Retention of backup for as long as you want
+  - Trick: in a stopped RDS database, you will still pay for storage. If you plan on stopping it for a long time, you should snapshot & restore instead
+
+- Aurora Backups
+
+  - Automated backups
+  - 1 to 35 days (cannot be disabled)
+  - point-in-time recovery in that timeframe
+  - Manual DB Snapshots
+    - Manually triggered by the user
+    - Retention of backup for as long as you want
+
+- RDS & Aurora Restore options
+
+  - Restoring a RDS / Aurora backup or a snapshot creates a new database
+  - Restoring MySQL RDS database from S3
+    - Create a backup of your on-premises database
+    - Store it on Amazon S3 (object storage)
+    - Restore the backup file onto a new RDS instance running MySQL
+  - Restoring MySQL Aurora cluster from S3
+    - Create a backup of your on-premises database using Percona XtraBackup
+    - Store the backup file on Amazon S3
+    - Restore the backup file onto a new Aurora cluster running MySQL
+
+- Aurora Database Cloning
+  - Create a new Aurora DB Cluster from an existing one
+  - Faster than snapshot & restore
+  - Uses copy-on-write protocol
+    - Initially, the new DB cluster uses the same data volume as the original DB cluster (fast and efficient – no copying is needed)
+    - When updates are made to the new DB cluster data, then additional storage is allocated and data is copied to be separated
+  - Very fast & cost-effective
+  - Useful to create a “staging” database from a “production” database without impacting the production database
+
+7. ### RDS & Aurora Security
+
+- At-rest encryption:
+  - Database master & replicas encryption using AWS KMS – must be defined as launch time
+  - If the master is not encrypted, the read replicas cannot be encrypted
+  - To encrypt an un-encrypted database, go through a DB snapshot & restore as encrypted
+- In-flightencryption: TLS-readybydefault,usetheAWSTLSrootcertificatesclient-side
+- IAM Authentication: IAM roles to connect to your database (instead of username/pw) - Security Groups: Control Network access to your RDS / Aurora DB
+- No SSH available except on RDS Custom
+- Audit Logs can be enabled and sent to CloudWatch Logs for longer retention
+
+8. ### Amazon RDS Proxy
+
+- Fully managed database proxy for RDS
+- Allows apps to pool and share DB connections established with the database
+- Improving database efficiency by reducing the stress on database resources (e.g., CPU, RAM) and minimize open connections (and timeouts)
+- Serverless, autoscaling, highly available (multi-AZ)
+- Reduced RDS & Aurora failover time by up 66%
+- Supports RDS (MySQL, PostgreSQL, MariaDB, MS SQL Server) and Aurora (MySQL, PostgreSQL)
+- No code changes required for most apps
+- Enforce IAM Authentication for DB, and securely store credentials in AWS Secrets Manager
+- RDS Proxy is never publicly accessible (must be accessed from VPC)
+
+9. ### Amazon ElastiCache Overview
+
+- The same way RDS is to get managed Relational Databases...
+- ElastiCache is to get managed Redis or Memcached
+- Caches are in-memory databases with really high performance, low latency
+- Helps reduce load off of databases for read intensive workloads
+- Helps make your application stateless
+- AWS takes care of OS maintenance / patching, optimizations, setup, configuration, monitoring, failure recovery and backups
+- Using ElastiCache involves heavy application code changes © Stephane Maarek
+
+- ElastiCache Solution Architecture - DB Cache
+
+  - Applications queries ElastiCache, if not available, get from RDS and store in ElastiCache.
+  - Helps relieve load in RDS
+  - Cache must have an invalidation strategy to make sure only the most current data is used in there.
+
+- ElastiCache Solution Architecture – User Session Store
+
+  - User logs into any of the application
+  - The application writes the session data into ElastiCache
+  - The user hits another instance of our application
+  - The instance retrieves the data and the user is already logged in
+
+- ElastiCache – Redis vs Memcached
+  | REDIS | MEMCACHED |
+  | ------------------------------------------------------- | ---------------------------------------------- |
+  | Multi AZ with Auto-Failover | Multi-node for partitioning of data (sharding) |
+  | Read Replicas to scale reads and have high availability | No high availability (replication) |
+  | Data Durability using AOF persistence | Non persistent |
+  | Backup and restore features | No backup and restore |
+  | Supports Sets and Sorted Sets | Multi-threaded architecture |
+
+---
+
+---
+
+---
+
+10. ### ElastiCache for Solution Architects
+
+- ElastiCache – Cache Security
+
+  - ElastiCache supports IAM Authentication forRedis
+  - IAM policies on ElastiCache are only used for AWS API-level security
+  - Redis AUTH
+    - You can set a “password/token” when you create a Redis cluster
+    - This is an extra level of security for your cache (on top of security groups)
+    - Support SSL in flight encryption
+  - Memcached
+  - Supports SASL-based authentication (advanced)
+
+- Patterns for ElastiCache
+
+  - Lazy Loading: all the read data is cached, data can become stale in cache
+  - Write Through: Adds or update data in the cache when written to a DB (no stale data)
+  - Session Store: store temporary session data in a cache (using TTL features)
+
+- ElastiCache – Redis Use Case
+  - Gaming Leaderboards are computationally complex
+  - Redis Sorted sets guarantee both uniqueness and element ordering
+  - Each time a new element added, it’s ranked in real time, then added in correct order
+
+11. ### List of Ports to be familiar
+
+- **Important ports:**
+
+  - FTP: 21
+  - SSH: 22
+  - SFTP: 22 (same as SSH)
+  - HTTP: 80
+  - HTTPS: 443
+
+- **RDS Databases ports:**
+  - PostgreSQL: 5432
+  - MySQL: 3306
+  - Oracle RDS: 1521
+  - MSSQL Server: 1433
+  - MariaDB: 3306 (same as MySQL)
+  - Aurora: 5432 (if PostgreSQL compatible) or 3306 (if MySQL compatible)
+
+## Amazon Route 53
+
+### 1. What is DNS?
+
+- Domain Name System which translates the human friendly hostnames into the machine IP addresses
+- www.google.com => 172.217.18.36
+- DNS is the backbone of the Internet
+- DNS Terminologies:
+  - Domain Registrar : Amazon Route 53, GoDaddy, ...
+  - DNS Records: A, AAAA, CNAME, NS, ...
+  - Zone File: contains DNS records
+  - Name Server: resolves DNS queries (Authoritative or Non-Authoritative)
+  - Top Level Domain (TLD): .com, .us, .in, .gov, .org, ...
+  - Second Level Domain (SLD): amazon.com, google.com, ...
+
+### 2. Route 53 Overview
+
+- Amazon Route 53
+
+  - A highly available, scalable, fully managed and Authoritative DNS
+    - Authoritative = the customer (you) can update the DNS records
+  - Route 53 is also a Domain Registrar
+  - Ability to check the health of your resources
+  - The only AWS service which provides 100% availability SLA
+  - Why Route 53? 53 is a reference to the traditional DNS port
+
+- Route 53 – Records
+  - How you want to route traffic for a domain
+  - Each record contains:
+    - Domain/subdomain Name – e.g., example.com
+    - Record Type – e.g., A or AAAA
+    - Value – e.g., 12.34.56.78
+    - Routing Policy – how Route 53 responds to queries
+    - TTL – amount of time the record cached at DNS Resolvers
+  - Route 53 supports the following DNS record types:
+    - (must know)A /AAAA / CNAME / NS
+    - (advanced)CAA/DS/MX/NAPTR/PTR/SOA/TXT/SPF/SRV
+- Route 53 – RecordTypes
+  - **A** – maps a hostname to IPv4
+  - **AAAA** – maps a hostname to IPv6
+  - **CNAME** – maps a hostname to another hostname
+    - The target is a domain name which must have an A or AAAA record
+    - Can’t create a CNAME record for the top node of a DNS namespace (Zone Apex)
+    - Example: you can’t create for example.com, but you can create for www.example.com
+  - **NS** – Name Servers for the Hosted Zone
+    - Control how traffic is routed for a domain
+- Route 53 – Hosted Zones
+  - A container for records that define how to route traffic to a domain and its subdomains
+  - **Public Hosted Zones** - contains records that specify how to route traffic on the Internet (public domain names) - application1.mypublicdomain.com
+  - **Private Hosted Zones** - contain records that specify how you route traffic within one or more VPCs (private domain names) - application1.company.internal
+  - You pay $0.50 per month per hosted zone
+
+### 3. Route 53 - TTL
+
+- Route 53 – RecordsTTL (TimeTo Live)
+  - High TTL – e.g., 24 hr
+    - Less traffic on Route 53
+    - Possibly outdated records
+  - Low TTL – e.g., 60 sec.
+    - More traffic on Route 53 ($$)
+    - Records are outdated for less time
+    - Easy to change records
+  - Except for Alias records, TTL is mandatory for each DNS record
+
+### 4. Route 53 CNAME vs Alias
+
+- CNAME vs Alias
+
+  - AWS Resources (Load Balancer, CloudFront...) expose an AWS hostname:
+    - lb1-1234.us-east-2.elb.amazonaws.com and you want myapp.mydomain.com
+  - CNAME:
+    - Points a hostname to any other hostname. (app.mydomain.com => blabla.anything.com)
+    - ONLY FOR NON ROOT DOMAIN (aka.something.mydomain.com)
+  - Alias:
+    - Points a hostname to an AWS Resource (app.mydomain.com => blabla.amazonaws.com)
+    - Works for ROOT DOMAIN and NON ROOT DOMAIN (aka mydomain.com)
+    - Free of charge
+    - Native health check
+
+- Route 53 – Alias Records
+
+  - Maps a hostname to an AWS resource
+  - An extension to DNS functionality
+  - Automatically recognizes changes in the resource’s IP addresses
+  - Unlike CNAME, it can be used for the top node of a DNS namespace (Zone Apex), e.g.: example.com
+  - Alias Record is always of type A/AAAA for AWS resources (IPv4 / IPv6)
+  - You can’t set the TTL
+
+- Route 53 – Alias Records Targets
+  - Elastic Load Balancers
+  - CloudFront Distributions
+  - API Gateway
+  - Elastic Beanstalk environments
+  - S3 Websites
+  - VPC Interface Endpoints
+  - Global Accelerator accelerator
+  - Route 53 record in the same hosted zone
+  - You cannot set an ALIAS record for an EC2 DNS name
+
+### 5. Route 53 – Routing Policies
+
+- Define how Route 53 responds to DNS queries
+- Don’t get confused by the word “Routing”
+  - It’s not the same as Load balancer routing which routes the traffic
+  - DNS does not route any traffic, it only responds to the DNS queries
+- Route 53 Supports the following Routing Policies
+
+  - Simple routing
+  - Weighted routing
+  - Latency-based routing
+  - Failover routing
+  - Geolocation routing
+  - Geoproximity routing
+  - IP-based routing
+  - Multivalue answer routing
+
+- 1. **Simple routing**
+  - Typically, route traffic to a single resource
+  - Can specify multiple values in the same record
+  - If multiple values are returned, a random one is chosen by the client
+  - When Alias enabled, specify only one AWS resource
+  - Can’t be associated with Health Checks
+- 2. **Weighted routing**
+  - Control the % of the requests that go to each specific resource
+  - Assign each record a relative weight:
+    - 𝑡𝑟𝑎𝑓𝑓𝑖𝑐(%)= Weight for specific record / Sum of all the weights for all records
+    - Weights don’t need to sum up to 100
+  - DNS records must have the same name and type
+  - Can be associated with Health Checks
+  - Use cases: load balancing between regions, testing new application versions...
+  - Assign a weight of 0 to a record to stop sending traffic to a resource
+  - If all records have weight of 0, then all records will be returned equally
+- 3. **Latency-based routing**
+  - Redirect to the resource that has the least latency close to us
+  - Super helpful when latency for users is a priority
+  - Latency is based on traffic between users and AWS Regions
+  - Germany users may be directed to the US (if that’s the lowest latency)
+  - Can be associated with Health Checks (has a failover capability)
+- 4. **Failover routing**
+  - Use when you want to configure active-passive failover. You can use failover routing to create records in a private hosted zone.
+  - You can use failover routing policy for records in a private hosted zone.
+- 5. **Geolocation routing**
+  - Different from Latency-based!
+  - This routing is based on user location
+  - Specify location by Continent, Country or by US State (if there’s overlapping, most precise location selected)
+  - Should create a “Default” record (in case there’s no match on location)
+  - Use cases: website localization, restrict content distribution, load balancing, ...
+  - Can be associated with Health Checks
+- 6. **Geoproximity routing**
+  - Route traffic to your resources based on the geographic location of users and resources
+  - Ability to shift more traffic to resources based on the defined bias
+  - To change the size of the geographic region, specify bias values:
+    - To expand (1 to 99) – more traffic to the resource
+    - To shrink (-1 to -99) – less traffic to the resource
+  - Resources can be:
+    - AWS resources (specify AWS region)
+    - Non-AWS resources (specify Latitude and Longitude)
+  - You must use Route 53 Traffic Flow to use this feature
+- 7. **IP-based routing**
+  - Routing is based on clients’ IP addresses
+  - You provide a list of CIDRs for your clients and the corresponding endpoints/locations (user-IP-to-endpoint mappings)
+  - Use cases: Optimize performance, reduce network costs...
+  - Example: route end users from a particular ISP to a specific endpoint
+- 8. **Multivalue answer routing**
+  - Use when routing traffic to multiple resources
+  - Route 53 return multiple values/resources
+  - Can be associated with Health Checks (return only values for healthy resources)
+  - Up to 8 healthy records are returned for each Multi-Value query
+  - Multi-Value is not a substitute for having an ELB
+
+### 6. Route 53 – Health Checks
+
+- HTTP Health Checks are only for public resources
+- Health Check => Automated DNS Failover:
+  - 1. Health checks that monitor an endpoint(application, server, other AWS resource)
+  - 2. Health checks that monitor other health checks (Calculated Health Checks)
+  - 3. Health checks that monitor CloudWatch Alarms (full control !!) – e.g., throttles of DynamoDB, alarms on RDS, custom metrics, ... (helpful for private resources)
+- Health Checks are integrated with CW metrics
+
+- Health Checks – Monitor an Endpoint
+
+  - About 15 global health checkers will check the endpoint health
+    - Healthy/UnhealthyThreshold–3(default)
+    - Interval – 30 sec (can set to 10 sec – higher cost)
+    - Supportedprotocol:HTTP, HTTPSandTCP
+    - If > 18% of health checkers report the endpoint is healthy, Route 53 considers it Healthy. Otherwise, it’s Unhealthy
+    - Ability to choose which locations you want Route 53 to use
+  - Health Checks pass only when the endpoint responds with the 2xx and 3xx status codes
+  - Health Checks can be setup to pass / fail based on the text in the first 5120 bytes of the response
+  - Configure you router/firewall to allow incoming requests from Route 53 Health Checkers
+
+- Route 53 – Calculated Health Checks
+
+  - Combine the results of multiple Health Checks into a single Health Check
+  - You can use OR, AND, or NOT
+  - Can monitor up to 256 Child Health Checks
+  - Specify how many of the health checks need to pass to make the parent pass
+  - Usage: perform maintenance to your website without causing all health checks to fail
+
+- Health Checks – Private Hosted Zones
+
+  - Route 53 health checkers are outside the VPC
+  - They can’t access private endpoints (private VPC or on-premises resource)
+  - You can create a CloudWatch Metric and associate a CloudWatch Alarm, then create a Health Check that checks the alarm itself
+
+
+### 7. Domain Registar vs. DNS Service
+  - You buy or register your domain name with a Domain Registrar typically by paying annual charges (e.g., GoDaddy, Amazon Registrar Inc., ...)
+  - The Domain Registrar usually provides you with a DNS service to manage your DNS records
+  - But you can use another DNS service to manage your DNS records
+  - Example: purchase the domain from GoDaddy and use Route 53 to manage your DNS records
+
+- 3rd Party Registrar with Amazon Route 53
+  - If you buy your domain on a 3rd par ty registrar, you can still use Route 53 as the DNS Service provider
+    - 1. Create a Hosted Zone in Route 53
+    - 2. Update NS Records on 3rd party website to use Route 53 Name Servers
+  - Domain Registrar != DNS Service
+  - But every Domain Registrar usually comes with some DNS features
+---
 
 # 🛡️ License
 
