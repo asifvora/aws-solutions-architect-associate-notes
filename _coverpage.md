@@ -14,6 +14,8 @@
 - High Availability & Scalability
 - AWS Fundamentals: RDS + Aurora + ElastiCache
 - Amazon Route 53
+- Beanstalk Overview
+- Amazon S3 Introduction
 
 [GitHub](https://github.com/asifvora/aws-solutions-architect-associate-notes)
 [Get Started](#aws-solutions-architect-associate-notes)
