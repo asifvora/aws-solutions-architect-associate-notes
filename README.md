@@ -94,6 +94,12 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 5   | [S3 Replication](#S3-Replication)                                                                       |
 | 6   | [S3 Storage Classes Overview](#S3-Storage-Classes-Overview)                                             |
 |     | **Advanced Amazon S3**                                                                                  |
+| 1   | [S3 Lifecycle Rules](#S3-Lifecycle-Rules)                                                               |
+| 2   | [S3 Requester Pays](#S3-Requester-Pays)                                                                 |
+| 3   | [S3 Event Notifications](#S3-Event-Notifications)                                                       |
+| 4   | [S3 Performance](#S3-Performance)                                                                       |
+| 5   | [S3 Select & Glacier Select](#S3-Select-&-Glacier-Select)                                               |
+| 6   | [S3 Batch Operations](#S3-Batch-Operations)                                                             |
 
 ## AWS
 
@@ -1951,6 +1957,109 @@ https://aws-solutions-architect-associate-notes.vercel.app
   - [For more detail](https://aws.amazon.com/s3/pricing/)
 
 ## Advanced Amazon S3
+
+### 1. S3 Lifecycle Rules
+
+- Amazon S3 – Moving between Storage Classes
+
+  - You can transition objects between storage classes
+  - For infrequently accessed object, move them to Standard IA
+  - For archive objects that you don’t need fast access to, move them to Glacier or Glacier Deep Archive
+  - Moving objects can be automated using a Lifecycle Rules
+
+- Amazon S3 – Lifecycle Rules
+
+  - **Transition Actions** – configure objects to transition to another storage class
+    - Move objects to Standard IA class 60 days after creation
+    - Move to Glacier for archiving after 6 months
+  - **Expiration actions** – configure objects to expire (delete) after some time
+
+    - Access log files can be set to delete after a 365 days
+    - Can be used to delete old versions of files (if versioning is enabled)
+    - Can be used to delete incomplete Multi-Part uploads
+
+  - Rules can be created for a certain prefix (example: s3://mybucket/mp3/\*)
+  - Rules can be created for certain objectsTags (example:Department:Finance)
+
+- Amazon S3 Analytics – Storage Class Analysis
+
+  - Help you decide when to transition objects to the right storage class
+  - Recommendations for Standard and Standard IA
+    - Does NOT work for One-Zone IA or Glacier
+  - Report is updated daily
+  - 24 to 48 hours to start seeing data analysis
+  - Good first step to put together Lifecycle Rules (or improve them)!
+
+### 2. S3 Requester Pays
+
+- In general, bucket owners pay for all Amazon S3 storage and data transfer costs associated with their bucket
+- With Requester Pays buckets, the requester instead of the bucket owner pays the cost of the request and the data download from the bucket
+- Helpful when you want to share large datasets with other accounts
+- The requester must be authenticated in AWS (cannot be anonymous)
+
+### 3. S3 Event Notifications
+
+- S3:ObjectCreated, S3:ObjectRemoved, S3:ObjectRestore, S3:Replication...
+- Object name filtering possible (\*.jpg)
+- Use case: generate thumbnails of images uploaded to S3
+- Can create as many “S3 events” as desired
+- S3 event notifications typically deliver events in seconds but can sometimes take a minute or longer
+
+- S3 Event Notifications with Amazon EventBridge
+  - Advanced filtering options with JSON rules (metadata, object size, name...)
+  - Multiple Destinations – ex Step Functions, Kinesis Streams / Firehose...
+  - EventBridge Capabilities – Archive, Replay Events, Reliable delivery
+
+### 4. S3 Performance
+
+- S3 – Baseline Performance
+
+  - Amazon S3 automatically scales to high request rates, latency 100-200 ms
+  - Your application can achieve at least 3,500 PUT/COPY/POST/DELETE or 5,500 GET/HEAD requests per second per prefix in a bucket.
+  - There are no limits to the number of prefixes in a bucket.
+  - Example (object path => prefix):
+    - bucket/folder1/sub1/file => /folder1/sub1/
+    - bucket/folder1/sub2/file => /folder1/sub2/
+    - bucket/1/file => /1/
+    - bucket/2/file => /2/
+  - If you spread reads across all four prefixes evenly, you can achieve 22,000 requests per second for GET and HEAD
+
+- S3 Performance
+
+  - **Multi-Part upload**:
+
+    - recommended for files > 100MB, must use for files > 5GB
+    - Can help parallelize uploads (speed up transfers)
+
+  - **S3Transfer Acceleration**
+    - Increase transfer speed by transferring file to an AWS edge location which will forward the data to the S3 bucket in the target region
+    - Compatible with multi-part upload
+
+- S3 Performance – S3 Byte-Range Fetches
+  - Parallelize GETs by requesting specific byte ranges
+  - Better resilience in case of failures
+
+### 5. S3 Select & Glacier Select
+
+- Retrieve less data using SQL by performing server-side filtering
+- Can filter by rows & columns (simple SQL statements)
+- Less network transfer, less CPU cost client-side
+
+### 6. S3 Batch Operations
+
+- Perform bulk operations on existing S3 objects with a single request, example:
+  - Modify object metadata & properties
+  - Copy objects between S3 buckets
+  - Encrypt un-encrypted objects
+  - ModifyACLs,tags
+  - Restore objects from S3 Glacier
+  - Invoke Lambda function to perform custom action on each object
+- A job consists of a list of objects, the action to perform, and optional parameters
+- S3 Batch Operations manages retries, tracks progress, sends completion notifications, generate reports ...
+- You can use S3 Inventory to get object list and use S3 Select to filter your objects
+
+## Amazon S3 – Security
+
 
 #
 

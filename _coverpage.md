@@ -17,6 +17,7 @@
 - Beanstalk Overview
 - Amazon S3 Introduction
 - Advanced Amazon S3
+- Amazon S3 – Security
 
 [GitHub](https://github.com/asifvora/aws-solutions-architect-associate-notes)
 [Get Started](#aws-solutions-architect-associate-notes)
