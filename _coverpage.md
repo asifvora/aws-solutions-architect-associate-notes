@@ -16,6 +16,7 @@
 - Amazon Route 53
 - Beanstalk Overview
 - Amazon S3 Introduction
+- Advanced Amazon S3
 
 [GitHub](https://github.com/asifvora/aws-solutions-architect-associate-notes)
 [Get Started](#aws-solutions-architect-associate-notes)

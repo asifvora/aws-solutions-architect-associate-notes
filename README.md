@@ -89,6 +89,11 @@ https://aws-solutions-architect-associate-notes.vercel.app
 |     | **Amazon S3 Introduction**                                                                              |
 | 1   | [S3 Overview](#S3-Overview)                                                                             |
 | 2   | [S3 Security: Bucket Policy](#S3-Security:-Bucket-Policy)                                               |
+| 3   | [S3 Website Overview](#S3-Website-Overview)                                                             |
+| 4   | [S3 Versioning](#S3-Versioning)                                                                         |
+| 5   | [S3 Replication](#S3-Replication)                                                                       |
+| 6   | [S3 Storage Classes Overview](#S3-Storage-Classes-Overview)                                             |
+|     | **Advanced Amazon S3**                                                                                  |
 
 ## AWS
 
@@ -1785,13 +1790,14 @@ https://aws-solutions-architect-associate-notes.vercel.app
 ### 2. S3 Security: Bucket Policy
 
 - Amazon S3 – Security
+
   - **User-Based**
     - IAM Policies – which API calls should be allowed for a specific user from IAM
   - **Resource-Based**
     - Bucket Policies – bucket wide rules from the S3 console - allows cross account
     - Object Access Control List (ACL) – finer grain (can be disabled)
     - Bucket Access Control List (ACL) – less common (can be disabled)
-  > **Note**: an IAM principal can access an S3 object if
+      > **Note**: an IAM principal can access an S3 object if
     - The user IAM permissions ALLOW it OR the resource policy ALLOWS it
     - AND there’s no explicit DENY
   - **Encryption**: encrypt objects in Amazon S3 using encryption keys
@@ -1807,6 +1813,144 @@ https://aws-solutions-architect-associate-notes.vercel.app
     - Force objects to be encrypted at upload
     - Grant access to another account (Cross Account)
 
+### 3. S3 Website Overview
+
+- S3 can host static websites and have them accessible on the Internet
+- The website URL will be (depending on the region)
+  - http://bucket-name.s3-website-aws-region.amazonaws.com
+    OR
+  - http://bucket-name.s3-website.aws-region.amazonaws.com
+- If you get a 403 Forbidden error, make sure the bucket policy allows public reads!
+
+### 4. S3 Versioning
+
+- You can version your files in Amazon S3
+- It is enabled at the bucket level
+- Same key overwrite will change the “version”: 1, 2, 3....
+- It is best practice to version your buckets
+  - Protect against unintended deletes (ability to restore a version)
+  - Easy roll back to previous version
+- Notes:
+  - Any file that is not versioned prior to enabling versioning will have version “null”
+  - Suspending versioning does not delete the previous versions
+
+### 5. S3 Replication
+
+- Amazon S3 – Replication (CRR & SRR)
+
+  - Must enable Versioning in source and destination buckets
+  - Cross-Region Replication (CRR)
+  - Same-Region Replication (SRR)
+  - Buckets can be in different AWS accounts
+  - Copying is asynchronous
+  - Must give proper IAM permissions to S3
+
+  - Use cases:
+    - CRR – compliance, lower latency access, replication across accounts
+    - SRR – log aggregation, live replication between production and test accounts
+
+- Amazon S3 – Replication (Notes)
+  - After you enable Replication, only new objects are replicated
+  - Optionally, you can replicate existing objects using S3 Batch Replication
+    - Replicates existing objects and objects that failed replication
+  - For DELETE operations
+    - Can replicate delete markers from source to target (optional setting)
+    - Deletions with a version ID are not replicated (to avoid malicious deletes)
+  - There is no “chaining” of replication
+    - If bucket 1 has replication into bucket 2, which has replication into bucket 3
+    - Then objects created in bucket 1 are not replicated to bucket 3
+
+### 6. S3 Storage Classes Overview
+
+- S3 Storage Classes
+
+  - Amazon S3 Standard - General Purpose
+  - Amazon S3 Standard-Infrequent Access (IA)
+  - Amazon S3 One Zone-Infrequent Access
+  - Amazon S3 Glacier Instant Retrieval
+  - Amazon S3 Glacier Flexible Retrieval
+  - Amazon S3 Glacier Deep Archive
+  - Amazon S3 Intelligent Tiering
+
+- S3 Durability and Availability
+
+  - Durability:
+    - High durability (99.999999999%, 11 9’s) of objects across multiple AZ
+    - If you store 10,000,000 objects with Amazon S3, you can on average expect to incur a loss of a single object once every 10,000 years
+    - Same for all storage classes
+  - Availability:
+    - Measures how readily available a service is
+    - Varies depending on storage class
+    - Example: S3 standard has 99.99% availability = not available 53 minutes a year
+
+- **S3 Standard – General Purpose**
+
+  - 99.99% Availability
+  - Used for frequently accessed data
+  - Low latency and high throughput
+  - Sustain 2 concurrent facility failures
+  - Use Cases: Big Data analytics, mobile & gaming applications, content distribution...
+
+- **S3 Standard-Infrequent Access (IA)**
+
+  - For data that is less frequently accessed, but requires rapid access when needed
+  - Lower cost than S3 Standard
+
+  - Amazon S3 Standard-Infrequent Access (S3 Standard-IA)
+    - 99.9% Availability
+    - Use cases: Disaster Recovery, backups
+
+- **S3 One Zone-Infrequent Access**
+
+  - Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA)
+    - High durability (99.999999999%) in a single AZ; data lost when AZ is destroyed
+    - 99.5% Availability
+    - Use Cases: Storing secondary backup copies of on-premises data, or data you can recreate
+
+- **S3 Glacier Instant Retrieval**
+
+  - Low-cost object storage meant for archiving / backup
+  - Pricing: price for storage + object retrieval cost
+
+  - Amazon S3 Glacier Instant Retrieval
+    - Millisecond retrieval, great for data accessed once a quarter
+    - Minimum storage duration of 90 days
+
+- **S3 Glacier Flexible Retrieval**
+
+  - Amazon S3 Glacier Flexible Retrieval (formerly Amazon S3 Glacier):
+    - Expedited (1 to 5 minutes), Standard (3 to 5 hours), Bulk (5 to 12 hours) – free
+    - Minimum storage duration of 90 days
+
+- **S3 Glacier Deep Archive**
+
+  - Amazon S3 Glacier Deep Archive – for long term storage:
+    - Standard (12 hours), Bulk (48 hours)
+    - Minimum storage duration of 180 days
+
+- **S3 Intelligent Tiering**
+
+  - Small monthly monitoring and auto-tiering fee
+  - Moves objects automatically between Access Tiers based on usage
+  - There are no retrieval charges in S3 Intelligent-Tiering
+
+  - Frequent Access tier (automatic): default tier
+  - Infrequent Access tier (automatic): objects not accessed for 30 days
+  - Archive Instant Access tier (automatic): objects not accessed for 90 days
+  - Archive Access tier (optional): configurable from 90 days to 700+ days
+  - Deep Archive Access tier (optional): config. from 180 days to 700+ days
+
+- S3 Storage Classes Comparison
+
+  - ![S3-Storage-Classes-Comparison](./assests/images/S3-Storage-Classes-Comparison.png)
+  - [For more detail](https://aws.amazon.com/s3/storage-classes/)
+
+- S3 Storage Classes – Price Comparison
+  - Example: us-east-1
+  - ![S3-Storage-Price-Comparison](./assests/images/S3-Storage-Pricing-Comparison.png)
+  - [For more detail](https://aws.amazon.com/s3/pricing/)
+
+## Advanced Amazon S3
 
 #
 
