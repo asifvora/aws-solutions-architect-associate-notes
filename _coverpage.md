@@ -18,6 +18,7 @@
 - Amazon S3 Introduction
 - Advanced Amazon S3
 - Amazon S3 – Security
+- CloudFront & AWS Global Accelerator
 
 [GitHub](https://github.com/asifvora/aws-solutions-architect-associate-notes)
 [Get Started](#aws-solutions-architect-associate-notes)
