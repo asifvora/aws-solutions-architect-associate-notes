@@ -119,7 +119,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
 | 6   | [AWS Global Accelerator - Overview](#AWS-Global-Accelerator---Overview)                                 |
 |     | **AWS Storage Extras**                                                                                  |
 | 1   | [AWS Snow Family Overview](#AWS-Snow-Family-Overview)                                                   |
-| 2   | [Solution Architecture: Snowball into Glacier](#Solution-Architecture:-Snowball-into-Glacier)           |
+| 2   | [Solution Architecture Snowball into Glacier](#Solution-Architecture-Snowball-into-Glacier)           |
 | 3   | [Amazon FSx Overview](#Amazon-FSx-Overview)                                                             |
 | 4   | [Storage Gateway Overview](#Storage-Gateway-Overview)                                                   |
 | 5   | [AWS Transfer Family](#AWS-Transfer-Family)                                                             |
@@ -2464,7 +2464,7 @@ https://aws-solutions-architect-associate-notes.vercel.app
     - Launch compatible AWS services on your devices (ex: Amazon EC2 instances, AWS DataSync, Network File System (NFS))
 
 
-### 2. Solution Architecture: Snowball into Glacier
+### 2. Solution Architecture Snowball into Glacier
   - Snowball cannot import to Glacier directly
   - You must use Amazon S3 first, in combination with an S3 lifecycle policy
 
