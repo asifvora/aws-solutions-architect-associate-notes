@@ -19,6 +19,7 @@
 - Advanced Amazon S3
 - Amazon S3 – Security
 - CloudFront & AWS Global Accelerator
+- AWS Storage Extras
 
 [GitHub](https://github.com/asifvora/aws-solutions-architect-associate-notes)
 [Get Started](#aws-solutions-architect-associate-notes)
